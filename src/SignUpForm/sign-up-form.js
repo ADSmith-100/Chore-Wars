@@ -8,7 +8,7 @@ export default class SignUpForm extends Component {
       <div>
         <form className="signup-form">
           <div>
-            <label for="first-name">First name</label>
+            <label>First name</label>
             <input
               placeholder="First Name"
               type="text"
@@ -17,7 +17,7 @@ export default class SignUpForm extends Component {
             />
           </div>
           <div>
-            <label for="last-name">Last name</label>
+            <label>Last name</label>
             <input
               type="text"
               name="last-name"
@@ -26,11 +26,11 @@ export default class SignUpForm extends Component {
             />
           </div>
           <div>
-            <label for="username">Email</label>
+            <label>Email</label>
             <input type="text" name="username" id="username" />
           </div>
           <div>
-            <label for="password">Password</label>
+            <label>Password</label>
             <input type="password" name="password" id="password" />
           </div>
           <button>Sign Up</button>

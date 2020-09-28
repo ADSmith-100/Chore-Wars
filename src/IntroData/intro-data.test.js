@@ -5,7 +5,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 // make the App component available
-import App from "../App";
+import IntroData from "./intro-data";
 
 // this is the test case
 it("renders without crashing", () => {

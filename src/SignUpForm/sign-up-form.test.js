@@ -6,7 +6,7 @@ import ReactDOM from "react-dom";
 
 // make the App component available
 
-import Nav from "./nav";
+import SignUpForm from "./sign-up-form";
 
 // this is the test case
 it("renders without crashing", () => {
