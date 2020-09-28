@@ -4,6 +4,7 @@ import Context from "./context";
 import Nav from "./Nav/nav";
 import IntroData from "./IntroData/intro-data";
 import SignUpForm from "./SignUpForm/sign-up-form";
+import CreateChoreForm from "./CreateChoreForm/create-chore-form";
 
 export default class App extends React.Component {
   static contextType = Context;
@@ -46,6 +47,16 @@ export default class App extends React.Component {
                 }
               />
             </section>
+
+            <Route
+              path="/create-chore-form"
+              render={(props) => (
+                <Fragment>
+                  <Nav />
+                  <CreateChoreForm />
+                </Fragment>
+              )}
+            />
           </div>
         </BrowserRouter>
       </Context.Provider>

@@ -8,7 +8,6 @@ export default class SignUpForm extends Component {
       <div>
         <form className="signup-form">
           <div>
-            <label>First name</label>
             <input
               placeholder="First Name"
               type="text"
