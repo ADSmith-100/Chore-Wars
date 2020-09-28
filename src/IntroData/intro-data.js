@@ -8,9 +8,8 @@ export default class IntroData extends Component {
       <BrowserRouter>
         <div className="IntroData">
           <div className="IntroHeader">
-            <header role="banner">
-              <h1>Chore Wars</h1>
-              <h2>Housework, meet your match.</h2>
+            <header>
+              <h2 className="banner">Housework, meet your match.</h2>
             </header>
             <section>
               <header>

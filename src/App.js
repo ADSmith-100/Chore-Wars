@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import Context from "./context";
 import Nav from "./Nav/nav";
@@ -27,10 +27,25 @@ export default class App extends React.Component {
       <Context.Provider value={this.state}>
         <BrowserRouter>
           <div className="App">
-            <Nav />
-            <IntroData />
-            <SignUpForm />
-            {/* <Footer /> */}
+            <section className="landing_page">
+              <Route
+                exact
+                path="/"
+                render={
+                  (props) => (
+                    <Fragment>
+                      <Nav />
+                      <IntroData />
+                      <SignUpForm />
+                    </Fragment>
+                  )
+                  /* // <Nav />
+              // <IntroData />
+              // <SignUpForm />
+              // <Footer /> */
+                }
+              />
+            </section>
           </div>
         </BrowserRouter>
       </Context.Provider>

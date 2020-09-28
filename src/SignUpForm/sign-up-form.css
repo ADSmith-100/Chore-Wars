@@ -34,3 +34,7 @@ button[type="submit"]:hover {
   background-color: darkgray;
   padding: 20px;
 } */
+
+button {
+  margin-bottom: 10px;
+}
