@@ -11,6 +11,7 @@ export default class Nav extends Component {
             <h1>
               <Link to="/">ChoreWars</Link>{" "}
             </h1>
+
             <ul className="menu">
               <li>
                 <a className="navlink-minor" href="#">
@@ -19,13 +20,13 @@ export default class Nav extends Component {
               </li>
               <li>
                 <a className="navlink-minor" href="#">
-                  Sign In
+                  SignIn
                 </a>
               </li>
             </ul>
           </div>
-          <div className=""></div>
         </div>
+        <div className=""></div>
       </BrowserRouter>
     );
   }
