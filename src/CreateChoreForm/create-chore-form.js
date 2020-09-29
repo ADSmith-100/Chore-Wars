@@ -50,6 +50,7 @@ export default function CreateChoreForm() {
 
   return (
     <div className="chore-form">
+      <h1>Create New Chore Chart</h1>
       <form id="add-chores-form">
         <label>Household Name</label>
         <input
@@ -78,26 +79,25 @@ export default function CreateChoreForm() {
                 placeholder="Larry"
                 onChange={(e) => handleInputChangeMember(e, i)}
               />
-              <div className="btn-box">
-                {inputListMember.length !== 1 && (
-                  <button
-                    className="mr10"
-                    onClick={() => handleRemoveClickMember(i)}
-                  >
-                    Remove
-                  </button>
-                )}
-                {inputListMember.length - 1 === i && (
-                  <button onClick={handleAddClickMember}>Add</button>
-                )}
-              </div>
+
+              {inputListMember.length !== 1 && (
+                <button
+                  className="mr10"
+                  onClick={() => handleRemoveClickMember(i)}
+                >
+                  Remove
+                </button>
+              )}
+              {inputListMember.length - 1 === i && (
+                <button onClick={handleAddClickMember}>Add</button>
+              )}
             </div>
           );
         })}
         {inputListChore.map((x, i) => {
           return (
             <div className="chore-title" id="add-chore">
-              <label>Add New Chore</label>
+              <label>New Chore</label>
               <input
                 id="first-chore"
                 type="text"
@@ -105,19 +105,18 @@ export default function CreateChoreForm() {
                 placeholder="Dinner Dishes"
                 onChange={(e) => handleInputChangeChore(e, i)}
               />
-              <div className="btn-box">
-                {inputListChore.length !== 1 && (
-                  <button
-                    className="mr10"
-                    onClick={() => handleRemoveClickChore(i)}
-                  >
-                    Remove
-                  </button>
-                )}
-                {inputListChore.length - 1 === i && (
-                  <button onClick={handleAddClickChore}>Add</button>
-                )}
-              </div>
+
+              {inputListChore.length !== 1 && (
+                <button
+                  className="mr10"
+                  onClick={() => handleRemoveClickChore(i)}
+                >
+                  Remove
+                </button>
+              )}
+              {inputListChore.length - 1 === i && (
+                <button onClick={handleAddClickChore}>Add</button>
+              )}
 
               <input
                 type="checkbox"
@@ -125,12 +124,22 @@ export default function CreateChoreForm() {
                 id="isDaily"
                 title="Daily Chore?"
               ></input>
-              <label>Daily Chore?</label>
+              <label>Daily?</label>
             </div>
           );
         })}
-        <button type="submit">Submit</button>
-        <button type="reset">Reset</button>
+        <div>
+          <label>Reward for the chart?</label>
+          <input type="text"></input>
+        </div>
+        <div>
+          <label>Percentage of Chores Completed for Reward?</label>
+          <input type="number" max="100"></input>
+        </div>
+        <div>
+          <button type="submit">Submit</button>
+          <button type="reset">Reset</button>
+        </div>
       </form>
     </div>
   );
