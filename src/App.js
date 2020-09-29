@@ -5,6 +5,8 @@ import Nav from "./Nav/nav";
 import IntroData from "./IntroData/intro-data";
 import SignUpForm from "./SignUpForm/sign-up-form";
 import CreateChoreForm from "./CreateChoreForm/create-chore-form";
+import ChoreList from "./ChoreList/chore-list";
+import Results from "./Results/results";
 
 export default class App extends React.Component {
   static contextType = Context;
@@ -32,19 +34,13 @@ export default class App extends React.Component {
               <Route
                 exact
                 path="/"
-                render={
-                  (props) => (
-                    <Fragment>
-                      <Nav />
-                      <IntroData />
-                      <SignUpForm />
-                    </Fragment>
-                  )
-                  /* // <Nav />
-              // <IntroData />
-              // <SignUpForm />
-              // <Footer /> */
-                }
+                render={(props) => (
+                  <Fragment>
+                    <Nav />
+                    <IntroData />
+                    <SignUpForm />
+                  </Fragment>
+                )}
               />
             </section>
 
@@ -54,6 +50,24 @@ export default class App extends React.Component {
                 <Fragment>
                   <Nav />
                   <CreateChoreForm />
+                </Fragment>
+              )}
+            />
+            <Route
+              path="/chore-list/:list_id"
+              render={(props) => (
+                <Fragment>
+                  <Nav />
+                  <ChoreList />
+                </Fragment>
+              )}
+            />
+            <Route
+              path="/results/:list_id"
+              render={(props) => (
+                <Fragment>
+                  <Nav />
+                  <Results />
                 </Fragment>
               )}
             />

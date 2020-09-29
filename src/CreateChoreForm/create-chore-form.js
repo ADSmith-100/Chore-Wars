@@ -144,3 +144,5 @@ export default function CreateChoreForm() {
     </div>
   );
 }
+
+//on submit this needs to take you to /chore-list/your chore list id
