@@ -51,7 +51,7 @@ export default function CreateChoreForm() {
   return (
     <div className="chore-form">
       <h1>Create New Chore Chart</h1>
-      <form id="add-chores-form">
+      <form id="add-chores-form" onSubmit={(e) => this.handleSubmit(e)}>
         <label>Household Name</label>
         <input
           type="text"

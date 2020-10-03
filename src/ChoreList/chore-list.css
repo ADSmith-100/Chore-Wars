@@ -1,21 +1,32 @@
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+.children {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-td,
-th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
+.child {
+  flex: 1;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  min-width: 250px;
 }
 
-tr:nth-child(even) {
-  background-color: #dddddd;
+.child ul {
+  list-style: none;
+  padding-left: 0;
 }
 
-.chore-list-bottom-buttons {
-  margin: 25px 0;
-  font-size: 20px;
+.child li {
+  cursor: pointer;
+}
+
+.chore-completed-true span {
+  color: green;
+  text-decoration: line-through;
+}
+
+.child em {
+  margin-left: 10px;
 }

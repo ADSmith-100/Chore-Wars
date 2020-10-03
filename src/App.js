@@ -12,13 +12,14 @@ export default class App extends React.Component {
   static contextType = Context;
   constructor(props) {
     super(props);
-    // this.state = {};
+    this.state = {
+      ChoreListTable: [],
+      ChoreListResults: [],
+    };
   }
 
   // componentDidMount() {
-  //   fetch("https://fierce-harbor-17385.herokuapp.com/api/folders")
-  //     .then((res) => res.json())
-  //     .then((folders) => this.setState({ folders }));
+  //   this.setState({})
 
   //   fetch("https://fierce-harbor-17385.herokuapp.com/api/notes")
   //     .then((res) => res.json())
@@ -58,6 +59,7 @@ export default class App extends React.Component {
               render={(props) => (
                 <Fragment>
                   <Nav />
+
                   <ChoreList />
                 </Fragment>
               )}
