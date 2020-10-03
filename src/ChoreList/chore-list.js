@@ -241,14 +241,14 @@ export default class ChoreList extends React.Component {
             </div>
           ))}
         </section>
+        <h2>Unassigned Chores</h2>
         <section className="unassigned_chores">
-          <h2>Unassigned Chores</h2>
           <div className="chore">
             <ul>
               {this.state.chores
                 .filter((c) => c.child_id === null)
                 .map((chore) => (
-                  <li>
+                  <li className="un-chore">
                     <span>{chore.title}</span>
                   </li>
                 ))}
