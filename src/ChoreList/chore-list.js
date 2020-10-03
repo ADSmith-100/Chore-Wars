@@ -91,6 +91,27 @@ export default class ChoreList extends React.Component {
     ],
   };
 
+  updatePersonName(name) {
+    if (name !== "") {
+      this.setState({
+        newChild: { ...this.state.newChild, name: name },
+      });
+    }
+  }
+
+  addChild = (e) => {
+    e.preventDefault();
+    if (this.state.newChild !== "") {
+      const newChild = {
+        id: this.state.children.length + 1,
+        name: this.state.newChild.name,
+      };
+      this.setState({ children: [...this.state.children, newChild] });
+      this.setState({ newChild: "" });
+      e.target.reset();
+    }
+  };
+
   updateChoreTitle(name) {
     if (name !== "") {
       this.setState({
@@ -103,13 +124,10 @@ export default class ChoreList extends React.Component {
     let result = this.state.children.filter((obj) => {
       return obj.name === childId;
     });
-    if (result === "") {
-      alert("Please choose a child");
-    } else {
-      this.setState({
-        newChore: { ...this.state.newChore, child_id: result[0].id },
-      });
-    }
+
+    this.setState({
+      newChore: { ...this.state.newChore, child_id: result[0].id },
+    });
   }
 
   addChore = (e) => {
@@ -118,7 +136,7 @@ export default class ChoreList extends React.Component {
       const newChore = {
         id: this.state.chores.length + 1,
         title: this.state.newChore.title,
-        child_id: this.state.newChore.child_id,
+        child_id: this.state.newChore.child_id || null,
         status: false,
         comments: "",
       };
@@ -150,7 +168,7 @@ export default class ChoreList extends React.Component {
             className="newChore"
             type="text"
             name="chore"
-            // value={this.state.newChore.title}
+            value={this.state.newChore.title || ""}
             placeholder="New Chore Name"
             aria-label="New Chore Name"
             onChange={(e) => this.updateChoreTitle(e.target.value)}
@@ -163,10 +181,9 @@ export default class ChoreList extends React.Component {
             id="childId"
             aria-label="New Chore Child Selection"
             onChange={(e) => this.updateChildId(e.target.value)}
-            required
-            defaultValue="None"
+            // defaultValue=""
           >
-            <option value="">None</option>
+            <option value="none">None</option>
             {ChildArray.map((child) => (
               <option
                 {...child}
@@ -182,6 +199,21 @@ export default class ChoreList extends React.Component {
           </select>
           <input type="submit" value="Add" aria-label="Add Chore" />
         </form>
+        <p>
+          <form onSubmit={(e) => this.addChild(e)}>
+            <input
+              className="newPerson"
+              type="text"
+              name="person"
+              value={this.state.newChild.name}
+              placeholder="New Person Name"
+              aria-label="New Person Name"
+              onChange={(e) => this.updatePersonName(e.target.value)}
+              required
+            ></input>
+            <input type="submit" value="Add" aria-label="Add Child" />
+          </form>
+        </p>
 
         <h1>The Jones Household</h1>
         <h2>Chore List for 10/01/2020 - 10/8/2020</h2>
@@ -209,7 +241,23 @@ export default class ChoreList extends React.Component {
             </div>
           ))}
         </section>
+        <section className="unassigned_chores">
+          <h2>Unassigned Chores</h2>
+          <div className="chore">
+            <ul>
+              {this.state.chores
+                .filter((c) => c.child_id === null)
+                .map((chore) => (
+                  <li>
+                    <span>{chore.title}</span>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        </section>
       </div>
     );
   }
 }
+
+//? why did I have to use e.target.reset()?  Is my controlled form messed up?
