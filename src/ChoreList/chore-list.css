@@ -31,7 +31,7 @@
   margin-left: 10px;
 }
 
-.chore li {
+.un-chore {
   flex: 1;
   margin: 20px;
   padding: 20px;
@@ -40,12 +40,7 @@
   min-width: 250px;
 }
 
-.chore ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.unassigned_chores {
+.unassigned-chores {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;

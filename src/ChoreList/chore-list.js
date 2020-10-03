@@ -214,7 +214,6 @@ export default class ChoreList extends React.Component {
             <input type="submit" value="Add" aria-label="Add Child" />
           </form>
         </p>
-
         <h1>The Jones Household</h1>
         <h2>Chore List for 10/01/2020 - 10/8/2020</h2>
         <section className="children">
@@ -242,18 +241,14 @@ export default class ChoreList extends React.Component {
           ))}
         </section>
         <h2>Unassigned Chores</h2>
-        <section className="unassigned_chores">
-          <div className="chore">
-            <ul>
-              {this.state.chores
-                .filter((c) => c.child_id === null)
-                .map((chore) => (
-                  <li className="un-chore">
-                    <span>{chore.title}</span>
-                  </li>
-                ))}
-            </ul>
-          </div>
+        <section className="unassigned-chores">
+          {this.state.chores
+            .filter((c) => c.child_id === null)
+            .map((chore) => (
+              <div className="un-chore">
+                <h3>{chore.title}</h3>
+              </div>
+            ))}
         </section>
       </div>
     );
