@@ -11,13 +11,13 @@ let id = function () {
 
 export default class ChoreList extends React.Component {
   state = {
-    newChore: {
-      id: null,
-      title: "",
-      child_id: null,
-      status: false,
-      comments: "",
-    },
+    newChore: "",
+    //   id: null,
+    //   title: "",
+    //   child_id: null,
+    //   status: false,
+    //   comments: "",
+    // },
     newChild: "",
     children: [
       { id: 1, name: "Larry" },
@@ -122,7 +122,9 @@ export default class ChoreList extends React.Component {
         status: false,
         comments: "",
       };
-      this.setState({ chores: [...this.state.chores, newChore], newChore: "" });
+      this.setState({ chores: [...this.state.chores, newChore] });
+      this.setState({ newChore: "" });
+      e.target.reset();
     }
   };
 
@@ -148,6 +150,7 @@ export default class ChoreList extends React.Component {
             className="newChore"
             type="text"
             name="chore"
+            // value={this.state.newChore.title}
             placeholder="New Chore Name"
             aria-label="New Chore Name"
             onChange={(e) => this.updateChoreTitle(e.target.value)}
