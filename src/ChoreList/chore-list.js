@@ -12,6 +12,7 @@ let id = function () {
 
 export default class ChoreList extends React.Component {
   state = {
+    randomIds: [],
     newChore: "",
     //   id: null,
     //   title: "",
@@ -208,6 +209,20 @@ export default class ChoreList extends React.Component {
     this.setState({ newChore: "" });
   };
 
+  shuffleChores = (e) => {
+    let randomIds = this.state.children.map((a) => a.id);
+    let newId = randomIds[Math.floor(Math.random() * randomIds.length)];
+    // let chores = this.state.chores.map((chore) => {
+    //   chore.child_id = newId;
+    //   return chore;
+    let chores = this.state.chores.map((chore) => {
+      chore.child_id = randomIds[Math.floor(Math.random() * randomIds.length)];
+      return chore;
+    });
+
+    this.setState({ chores });
+  };
+
   render() {
     let ChildArray = [];
     for (let o in this.state.children) {
@@ -292,11 +307,11 @@ export default class ChoreList extends React.Component {
             </div>
           ))}
         </section>
-        <section>
+        <div>
           <button onClick={(e) => this.unAssignAll(e)}>
             Unassign All Chores
           </button>
-        </section>
+        </div>
         <h2>Unassigned Chores</h2>
         <section className="unassigned-chores">
           {this.state.chores
@@ -339,6 +354,11 @@ export default class ChoreList extends React.Component {
               </div>
             ))}
         </section>
+        <div id="shuffle">
+          <button onClick={(e) => this.shuffleChores(e)}>
+            Shuffle Chores!
+          </button>
+        </div>
       </div>
     );
   }
