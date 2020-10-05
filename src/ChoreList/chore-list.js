@@ -93,19 +93,21 @@ export default class ChoreList extends React.Component {
   };
 
   updateChoreChildId(childId, choreId) {
-    let result = this.state.children.filter((obj) => {
-      return obj.name === childId;
-    });
-    let myChoreId = this.state.chores.filter((obj) => {
-      return obj.id === choreId;
-    });
-    this.setState({
-      newChore: {
-        ...this.state.newChore,
-        child_id: result[0].id,
-        id: myChoreId[0].id,
-      },
-    });
+    if (childId) {
+      let result = this.state.children.filter((obj) => {
+        return obj.name === childId;
+      });
+      let myChoreId = this.state.chores.filter((obj) => {
+        return obj.id === choreId;
+      });
+      this.setState({
+        newChore: {
+          ...this.state.newChore,
+          child_id: result[0].id,
+          id: myChoreId[0].id,
+        },
+      });
+    }
   }
 
   updatePersonName(name) {
@@ -166,6 +168,7 @@ export default class ChoreList extends React.Component {
       return chore;
     });
     this.setState({ chores });
+    e.target.reset();
   };
 
   addChore = (e) => {
@@ -194,6 +197,15 @@ export default class ChoreList extends React.Component {
     this.setState({ chores });
   };
 
+  unAssignAll = (e) => {
+    let chores = this.state.chores.map((chore) => {
+      chore.child_id = null;
+      return chore;
+    });
+    this.setState({ chores });
+    this.setState({ newChore: "" });
+  };
+
   render() {
     let ChildArray = [];
     for (let o in this.state.children) {
@@ -206,7 +218,7 @@ export default class ChoreList extends React.Component {
             className="newChore"
             type="text"
             name="chore"
-            value={this.state.newChore.title || ""}
+            // value={this.state.newChore.title || ""}
             placeholder="New Chore Name"
             aria-label="New Chore Name"
             onChange={(e) => this.updateChoreTitle(e.target.value)}
@@ -278,6 +290,11 @@ export default class ChoreList extends React.Component {
             </div>
           ))}
         </section>
+        <section>
+          <button onClick={(e) => this.unAssignAll(e)}>
+            Unassign All Chores
+          </button>
+        </section>
         <h2>Unassigned Chores</h2>
         <section className="unassigned-chores">
           {this.state.chores
@@ -287,6 +304,7 @@ export default class ChoreList extends React.Component {
                 <h3>{chore.title}</h3>
                 <form onSubmit={(e) => this.reassignChore(e)}>
                   <select
+                    defaultValue="Pick One"
                     className="dropDown"
                     name="childId"
                     id="childId"
@@ -296,7 +314,7 @@ export default class ChoreList extends React.Component {
                     }
                     // defaultValue=""
                   >
-                    <option value="none">None</option>
+                    <option disabled>Pick One</option>
                     {ChildArray.map((child) => (
                       <option
                         {...child}
