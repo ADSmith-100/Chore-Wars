@@ -1,4 +1,5 @@
 import React from "react";
+import update from "immutability-helper";
 import "./chore-list.css";
 
 let id = function () {
@@ -91,6 +92,22 @@ export default class ChoreList extends React.Component {
     ],
   };
 
+  updateChoreChildId(childId, choreId) {
+    let result = this.state.children.filter((obj) => {
+      return obj.name === childId;
+    });
+    let myChoreId = this.state.chores.filter((obj) => {
+      return obj.id === choreId;
+    });
+    this.setState({
+      newChore: {
+        ...this.state.newChore,
+        child_id: result[0].id,
+        id: myChoreId[0].id,
+      },
+    });
+  }
+
   updatePersonName(name) {
     if (name !== "") {
       this.setState({
@@ -129,6 +146,27 @@ export default class ChoreList extends React.Component {
       newChore: { ...this.state.newChore, child_id: result[0].id },
     });
   }
+
+  // getIndex(value, arr, prop) {
+  //   for (var i = 0; i < arr.length; i++) {
+  //     if (arr[i][prop] === value) {
+  //       return i;
+  //     }
+  //   }
+  //   return -1; //to handle the case where the value doesn't exist
+  // }
+
+  reassignChore = (e) => {
+    e.preventDefault();
+
+    let chores = this.state.chores.map((chore) => {
+      if (chore.id === this.state.newChore.id) {
+        chore.child_id = this.state.newChore.child_id;
+      }
+      return chore;
+    });
+    this.setState({ chores });
+  };
 
   addChore = (e) => {
     e.preventDefault();
@@ -247,6 +285,37 @@ export default class ChoreList extends React.Component {
             .map((chore) => (
               <div className="un-chore">
                 <h3>{chore.title}</h3>
+                <form onSubmit={(e) => this.reassignChore(e)}>
+                  <select
+                    className="dropDown"
+                    name="childId"
+                    id="childId"
+                    aria-label="New Chore Child Selection"
+                    onChange={(e) =>
+                      this.updateChoreChildId(e.target.value, chore.id)
+                    }
+                    // defaultValue=""
+                  >
+                    <option value="none">None</option>
+                    {ChildArray.map((child) => (
+                      <option
+                        {...child}
+                        key={child.id}
+                        value={child.id}
+                        name={child.name}
+                        text={child.name}
+                      >
+                        {child}
+                      </option>
+                    ))}
+                    ;
+                  </select>
+                  <input
+                    type="submit"
+                    value="Assign"
+                    aria-label="Assign Chore"
+                  />
+                </form>
               </div>
             ))}
         </section>
