@@ -200,6 +200,8 @@ export default class ChoreList extends React.Component {
   unAssignAll = (e) => {
     let chores = this.state.chores.map((chore) => {
       chore.child_id = null;
+      chore.status = false;
+      chore.comments = "";
       return chore;
     });
     this.setState({ chores });
@@ -279,11 +281,11 @@ export default class ChoreList extends React.Component {
                       onClick={() => this.toggleCompleted(chore.id)}
                     >
                       <span>{chore.title}</span>
-                      {chore.comments !== "" ? (
+                      {/* {chore.comments !== "" ? (
                         <em title={chore.comments}>C</em>
                       ) : (
                         <em>+</em>
-                      )}
+                      )} */}
                     </li>
                   ))}
               </ul>
