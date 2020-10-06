@@ -1,11 +1,15 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Link, Router } from "react-router-dom";
+import Nav from "../Nav/nav.js";
 import "./sign-up-form.css";
 
 export default class SignUpForm extends Component {
+  soon = () => {
+    alert("Feature coming soon! Please try the demo");
+  };
   render() {
     return (
       <div>
+        <Nav />
         <form className="signup-form">
           <div>
             <label>First name</label>
@@ -33,7 +37,7 @@ export default class SignUpForm extends Component {
             <label>Password</label>
             <input type="password" name="password" id="password" />
           </div>
-          <button>Sign Up</button>
+          <button onClick={this.soon}>Sign Up</button>
         </form>
       </div>
     );

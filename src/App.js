@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Router, Route, Link } from "react-router-dom";
 import Context from "./context";
 import Nav from "./Nav/nav";
 import IntroData from "./IntroData/intro-data";
@@ -28,33 +28,16 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Context.Provider value={this.state}>
-        <BrowserRouter>
-          <div className="App">
-            <section className="landing_page">
-              <Route
-                exact
-                path="/"
-                render={(props) => (
-                  <Fragment>
-                    <Nav />
-                    <IntroData />
-                    <SignUpForm />
-                  </Fragment>
-                )}
-              />
-            </section>
+      // <Context.Provider value={this.state}>
+      <BrowserRouter>
+        <div className="App">
+          <section>
+            <Route exact path="/" component={IntroData} />
+          </section>
+          <Route path="/chore-list" component={ChoreList} />
+          <Route path="/sign-up-form" component={SignUpForm} />
 
-            <Route
-              path="/create-chore-form"
-              render={(props) => (
-                <Fragment>
-                  <Nav />
-                  <CreateChoreForm />
-                </Fragment>
-              )}
-            />
-            <Route
+          {/* <Route
               path="/chore-list/:list_id"
               render={(props) => (
                 <Fragment>
@@ -72,10 +55,10 @@ export default class App extends React.Component {
                   <Results />
                 </Fragment>
               )}
-            />
-          </div>
-        </BrowserRouter>
-      </Context.Provider>
+            /> */}
+        </div>
+      </BrowserRouter>
+      // </Context.Provider>
     );
   }
 }

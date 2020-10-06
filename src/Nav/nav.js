@@ -1,33 +1,30 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Link, Router } from "react-router-dom";
+import { findAllInRenderedTree } from "react-dom/test-utils";
+import { BrowserRouter, Route, NavLink, Link, Router } from "react-router-dom";
 import "./nav.css";
 
 export default class Nav extends Component {
+  comingSoon = () => {
+    alert("Feature Coming Soon!");
+  };
   render() {
     return (
-      <BrowserRouter>
-        <div className="Nav">
-          <div className="NavLinks">
-            <h1>
-              <Link to="/">ChoreWars</Link>{" "}
-            </h1>
+      <div className="Nav">
+        <div className="NavLinks">
+          <h1>
+            <Link to="/">ChoreWars</Link>
+          </h1>
 
-            <ul className="menu">
-              <li>
-                <a className="navlink-minor" href="#">
-                  Demo
-                </a>
-              </li>
-              <li>
-                <a className="navlink-minor" href="#">
-                  SignIn
-                </a>
-              </li>
-            </ul>
-          </div>
+          <ul className="menu">
+            <li>
+              <Link to="/chore-list">Demo</Link>
+            </li>
+            <li>
+              <Link to="/sign-up-form">Login</Link>
+            </li>
+          </ul>
         </div>
-        <div className=""></div>
-      </BrowserRouter>
+      </div>
     );
   }
 }

@@ -1,5 +1,6 @@
 import React from "react";
-import update from "immutability-helper";
+import Nav from "../Nav/nav";
+
 import "./chore-list.css";
 
 let id = function () {
@@ -14,12 +15,6 @@ export default class ChoreList extends React.Component {
   state = {
     randomIds: [],
     newChore: "",
-    //   id: null,
-    //   title: "",
-    //   child_id: null,
-    //   status: false,
-    //   comments: "",
-    // },
     newChild: "",
     children: [
       { id: 1, name: "Larry" },
@@ -150,15 +145,6 @@ export default class ChoreList extends React.Component {
     });
   }
 
-  // getIndex(value, arr, prop) {
-  //   for (var i = 0; i < arr.length; i++) {
-  //     if (arr[i][prop] === value) {
-  //       return i;
-  //     }
-  //   }
-  //   return -1; //to handle the case where the value doesn't exist
-  // }
-
   reassignChore = (e) => {
     e.preventDefault();
 
@@ -217,6 +203,7 @@ export default class ChoreList extends React.Component {
     //   return chore;
     let chores = this.state.chores.map((chore) => {
       chore.child_id = randomIds[Math.floor(Math.random() * randomIds.length)];
+      chore.status = false;
       return chore;
     });
 
@@ -230,6 +217,7 @@ export default class ChoreList extends React.Component {
     }
     return (
       <div className="App">
+        <Nav />
         <form onSubmit={(e) => this.addChore(e)}>
           <input
             className="newChore"
@@ -281,8 +269,8 @@ export default class ChoreList extends React.Component {
             <input type="submit" value="Add" aria-label="Add Child" />
           </form>
         </p>
-        <h1>The Jones Household</h1>
-        <h2>Chore List for 10/01/2020 - 10/8/2020</h2>
+        <h1>Your Chore List</h1>
+
         <section className="children">
           {this.state.children.map((child) => (
             <div className="child">
@@ -310,6 +298,11 @@ export default class ChoreList extends React.Component {
         <div>
           <button onClick={(e) => this.unAssignAll(e)}>
             Unassign All Chores
+          </button>
+        </div>
+        <div id="shuffle">
+          <button onClick={(e) => this.shuffleChores(e)}>
+            Shuffle Chores!
           </button>
         </div>
         <h2>Unassigned Chores</h2>
@@ -354,11 +347,6 @@ export default class ChoreList extends React.Component {
               </div>
             ))}
         </section>
-        <div id="shuffle">
-          <button onClick={(e) => this.shuffleChores(e)}>
-            Shuffle Chores!
-          </button>
-        </div>
       </div>
     );
   }
