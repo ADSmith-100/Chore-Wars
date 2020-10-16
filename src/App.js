@@ -3,7 +3,7 @@ import { BrowserRouter, Router, Route, Link } from "react-router-dom";
 import Context from "./context";
 import Nav from "./Nav/nav";
 import IntroData from "./IntroData/intro-data";
-import SignUpForm from "./SignUpForm/sign-up-form";
+import SignUpForm from "./RegistrationForm/RegistrationForm";
 import CreateChoreForm from "./CreateChoreForm/create-chore-form";
 import ChoreList from "./ChoreList/chore-list";
 import Results from "./Results/results";
@@ -13,18 +13,31 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ChoreListTable: [],
-      ChoreListResults: [],
+      chores: [],
+      children: [],
+      users: [],
+      addChore: () => {
+        fetch("https://fierce-harbor-17385.herokuapp.com/api/chores")
+          .then((res) => res.json())
+          .then((folders) => this.setState({ chores }));
+      },
+      addNote: () => {
+        fetch("https://fierce-harbor-17385.herokuapp.com/api/notes")
+          .then((res) => res.json())
+          .then((notes) => this.setState({ notes }));
+      },
     };
   }
 
-  // componentDidMount() {
-  //   this.setState({})
+  componentDidMount() {
+    fetch("https://fierce-harbor-17385.herokuapp.com/api/folders")
+      .then((res) => res.json())
+      .then((folders) => this.setState({ folders }));
 
-  //   fetch("https://fierce-harbor-17385.herokuapp.com/api/notes")
-  //     .then((res) => res.json())
-  //     .then((notes) => this.setState({ notes }));
-  // }
+    fetch("https://fierce-harbor-17385.herokuapp.com/api/notes")
+      .then((res) => res.json())
+      .then((notes) => this.setState({ notes }));
+  }
 
   render() {
     return (
