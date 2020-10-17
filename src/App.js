@@ -18,6 +18,8 @@ export default class App extends React.Component {
     };
   }
 
+  //move all state and methods into app, then put state into context and break out render methods into components.
+
   // componentDidMount() {
   //   this.setState({})
 
