@@ -9,22 +9,24 @@ export default class Nav extends Component {
   };
   render() {
     return (
-      <div className="Nav">
-        <div className="NavLinks">
-          <h1>
-            <Link to="/">ChoreWars</Link>
-          </h1>
+      <Router>
+        <div className="Nav">
+          <div className="NavLinks">
+            <h1>
+              <Link to="/">ChoreWars</Link>
+            </h1>
 
-          <ul className="menu">
-            <li>
-              <Link to="/chore-list">Demo</Link>
-            </li>
-            <li>
-              <Link to="/sign-up-form">Login</Link>
-            </li>
-          </ul>
+            <ul className="menu">
+              <li>
+                <Link to="/chore-list">Demo</Link>
+              </li>
+              <li>
+                <Link to="/sign-up-form">Login</Link>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }
