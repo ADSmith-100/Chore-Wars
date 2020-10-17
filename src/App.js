@@ -7,6 +7,7 @@ import IntroData from "./IntroData/intro-data";
 import ChoreList from "./ChoreList/chore-list";
 
 import AddChild from "./AddForm/AddChild/addChild";
+import AddForm from "./AddForm/add-form";
 
 export default class App extends React.Component {
   static contextType = Context;
@@ -205,134 +206,98 @@ export default class App extends React.Component {
     let ChildArray = [];
     for (let o in this.state.children) {
       ChildArray.push(this.state.children[o].name);
-    }
-    return (
-      <Context.Provider value={this.state}>
-        <div className="App">
-          {/* <Nav /> */}
-          <form onSubmit={(e) => this.addChore(e)}>
-            <input
-              className="newChore"
-              type="text"
-              name="chore"
-              // value={this.state.newChore.title || ""}
-              placeholder="New Chore Name"
-              aria-label="New Chore Name"
-              onChange={(e) => this.updateChoreTitle(e.target.value)}
-              required
-            ></input>
+      return (
+        <Context.Provider value={this.state}>
+          <div className="App">
+            {/* <Nav /> */}
 
-            <select
-              className="dropDown"
-              name="childId"
-              id="childId"
-              aria-label="New Chore Child Selection"
-              onChange={(e) => this.updateChildId(e.target.value)}
-              // defaultValue=""
-            >
-              <option value="none">None</option>
-              {ChildArray.map((child) => (
-                <option
-                  {...child}
-                  key={child.id}
-                  value={child.id}
-                  name={child.name}
-                  text={child.name}
-                >
-                  {child}
-                </option>
-              ))}
-              ;
-            </select>
-            <input type="submit" value="Add" aria-label="Add Chore" />
-          </form>
-          <p>
-            <AddChild {...this.state} />
-          </p>
-          <h1>Your Chore List</h1>
+            <p>
+              <AddForm {...this.state} />
+            </p>
+            <h1>Your Chore List</h1>
 
-          <section className="children">
-            {this.state.children.map((child) => (
-              <div className="child">
-                <h3>{child.name}</h3>
-                <ul>
-                  {this.state.chores
-                    .filter((c) => c.child_id === child.id)
-                    .map((chore) => (
-                      <li
-                        className={`chore-completed-${chore.status}`}
-                        onClick={() => this.toggleCompleted(chore.id)}
-                      >
-                        <span>{chore.title}</span>
-                        {/* {chore.comments !== "" ? (
+            <section className="children">
+              {this.state.children.map((child) => (
+                <div className="child">
+                  <h3>{child.name}</h3>
+                  <ul>
+                    {this.state.chores
+                      .filter((c) => c.child_id === child.id)
+                      .map((chore) => (
+                        <li
+                          className={`chore-completed-${chore.status}`}
+                          onClick={() => this.toggleCompleted(chore.id)}
+                        >
+                          <span>{chore.title}</span>
+                          {/* {chore.comments !== "" ? (
                         <em title={chore.comments}>C</em>
                       ) : (
                         <em>+</em>
                       )} */}
-                      </li>
-                    ))}
-                </ul>
-              </div>
-            ))}
-          </section>
-          <div>
-            <button onClick={(e) => this.unAssignAll(e)}>
-              Unassign All Chores
-            </button>
-          </div>
-          <div id="shuffle">
-            <button onClick={(e) => this.shuffleChores(e)}>
-              Shuffle Chores!
-            </button>
-          </div>
-          <h2>Unassigned Chores</h2>
-          <section className="unassigned-chores">
-            {this.state.chores
-              .filter((c) => c.child_id === null)
-              .map((chore) => (
-                <div className="un-chore">
-                  <h3>{chore.title}</h3>
-                  <form onSubmit={(e) => this.reassignChore(e)}>
-                    <select
-                      defaultValue="Pick One"
-                      className="dropDown"
-                      name="childId"
-                      id="childId"
-                      aria-label="New Chore Child Selection"
-                      onChange={(e) =>
-                        this.updateChoreChildId(e.target.value, chore.id)
-                      }
-                      // defaultValue=""
-                    >
-                      <option disabled>Pick One</option>
-                      {ChildArray.map((child) => (
-                        <option
-                          {...child}
-                          key={child.id}
-                          value={child.id}
-                          name={child.name}
-                          text={child.name}
-                        >
-                          {child}
-                        </option>
+                        </li>
                       ))}
-                      ;
-                    </select>
-                    <input
-                      type="submit"
-                      value="Assign"
-                      aria-label="Assign Chore"
-                    />
-                  </form>
+                  </ul>
                 </div>
               ))}
-          </section>
-        </div>
-      </Context.Provider>
-    );
+            </section>
+            <div>
+              <button onClick={(e) => this.unAssignAll(e)}>
+                Unassign All Chores
+              </button>
+            </div>
+            <div id="shuffle">
+              <button onClick={(e) => this.shuffleChores(e)}>
+                Shuffle Chores!
+              </button>
+            </div>
+            <h2>Unassigned Chores</h2>
+            <section className="unassigned-chores">
+              {this.state.chores
+                .filter((c) => c.child_id === null)
+                .map((chore) => (
+                  <div className="un-chore">
+                    <h3>{chore.title}</h3>
+                    <form onSubmit={(e) => this.reassignChore(e)}>
+                      <select
+                        defaultValue="Pick One"
+                        className="dropDown"
+                        name="childId"
+                        id="childId"
+                        aria-label="New Chore Child Selection"
+                        onChange={(e) =>
+                          this.updateChoreChildId(e.target.value, chore.id)
+                        }
+                        // defaultValue=""
+                      >
+                        <option disabled>Pick One</option>
+                        {ChildArray.map((child) => (
+                          <option
+                            {...child}
+                            key={child.id}
+                            value={child.id}
+                            name={child.name}
+                            text={child.name}
+                          >
+                            {child}
+                          </option>
+                        ))}
+                        ;
+                      </select>
+                      <input
+                        type="submit"
+                        value="Assign"
+                        aria-label="Assign Chore"
+                      />
+                    </form>
+                  </div>
+                ))}
+            </section>
+          </div>
+        </Context.Provider>
+      );
+    }
   }
 }
-
 //move all state and methods into app, then put state into context and break out render methods into components.
 
 // componentDidMount() {

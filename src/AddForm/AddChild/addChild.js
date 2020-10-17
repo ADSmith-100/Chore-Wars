@@ -59,7 +59,6 @@ export default class AddChild extends React.Component {
     const { childName } = this.state;
 
     addChildRequest(childName, this.context.addChild);
-    this.props.history.push(`/`);
   }
 
   render() {
