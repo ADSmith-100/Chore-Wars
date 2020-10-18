@@ -108,16 +108,16 @@ export default class App extends React.Component {
     }
   }
 
-  addChild = (name) => {
+  addChild(name) {
     if (this.state.newChild !== "") {
       const newChild = {
         id: this.state.children.length + 1,
-        name: this.state.newChild.name,
+        name: name,
       };
       this.setState({ children: [...this.state.children, newChild] });
       this.setState({ newChild: "" });
     }
-  };
+  }
 
   updateChoreTitle(name) {
     if (name !== "") {

@@ -1,22 +1,21 @@
 import React from "react";
 import Context from "../../Context/context.js";
 
-function addChildRequest(name, callback) {
-  let id = function () {
-    // Math.random should be unique because of its seeding algorithm.
-    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-    // after the decimal.
-    return "_" + Math.random().toString(36).substr(2, 9);
-  };
-  callback(this.state.addChild(name));
-}
-//   fetch("https://fierce-harbor-17385.herokuapp.com/api/folders", {
+// function addChildRequest(name, callback) {
+//   let id = function () {
+//     // Math.random should be unique because of its seeding algorithm.
+//     // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+//     // after the decimal.
+//     return "_" + Math.random().toString(36).substr(2, 9);
+//   };
+
+//   fetch("https://https://stark-tor-49670.herokuapp.com/api/children", {
 //     method: "POST",
 //     headers: {
 //       "content-type": "application/json",
 //     },
 //     body: JSON.stringify({
-//       id: id,
+//       user_id: loggedinUser,
 //       name: name.value,
 //     }),
 //   })
@@ -37,7 +36,6 @@ function addChildRequest(name, callback) {
 //     .catch((error) => {
 //       //console.log(error);
 //     });
-// }
 
 export default class AddChild extends React.Component {
   static contextType = Context;
@@ -58,7 +56,7 @@ export default class AddChild extends React.Component {
     event.preventDefault();
     const { childName } = this.state;
 
-    addChildRequest(childName, this.context.addChild);
+    this.context.addChild;
   }
 
   render() {
@@ -66,7 +64,7 @@ export default class AddChild extends React.Component {
       <div>
         <h2>Add Child</h2>
 
-        <form onSubmit={(e) => this.addChild(e)}>
+        <form onSubmit={(e) => this.handleSubmit(e)}>
           <input
             className="newPerson"
             type="text"

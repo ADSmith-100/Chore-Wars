@@ -1,15 +1,13 @@
 import React from "react";
 import Context from "../../Context/context.js";
 
-function addChoreRequest(chore, callback) {
-  let id = function () {
-    // Math.random should be unique because of its seeding algorithm.
-    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-    // after the decimal.
-    return "_" + Math.random().toString(36).substr(2, 9);
-  };
-  callback(this.state.addChore(chore));
-}
+// function addChoreRequest(chore, callback) {
+//   let id = function () {
+//     // Math.random should be unique because of its seeding algorithm.
+//     // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+//     // after the decimal.
+//     return "_" + Math.random().toString(36).substr(2, 9);
+//   };
 
 export default class AddChore extends React.Component {
   static contextType = Context;
@@ -52,7 +50,7 @@ export default class AddChore extends React.Component {
     event.preventDefault();
     const { child_id, title } = this.state;
 
-    addChoreRequest(child_id, title, this.context.addChore);
+    context.addChore(event);
   }
 
   render() {
