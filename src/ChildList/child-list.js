@@ -35,19 +35,19 @@ function updateChoreRequest(chores, cb) {}
 
 export default class ChildList extends React.Component {
   static contextType = Context;
-  constructor(props) {
-    super(props);
-    this.state = {
-      status: { value: "" },
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     status: { value: "" },
+  //   };
+  // }
 
   render() {
     const ChildList = this.context.children.map((child) => (
       <div className="child">
         <h3>{child.name}</h3>
         <ul>
-          {this.props.chores
+          {this.context.chores
             .filter((c) => c.child_id === child.id)
             .map((chore) => (
               <li

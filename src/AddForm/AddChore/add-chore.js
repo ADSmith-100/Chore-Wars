@@ -11,63 +11,63 @@ import Context from "../../Context/context.js";
 
 export default class AddChore extends React.Component {
   static contextType = Context;
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: "",
-      user_id: "",
-      child_id: "",
-      title: "",
-      status: "",
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     id: "",
+  //     user_id: "",
+  //     child_id: "",
+  //     title: "",
+  //     status: "",
+  //   };
+  // }
 
-  updateChoreTitle(name) {
-    this.setState({
-      choreTitle: { value: name },
-    });
-  }
+  // updateChoreTitle(name) {
+  //   this.setState({
+  //     choreTitle: { value: name },
+  //   });
+  // }
 
-  updateChoreChildId(childId, choreId) {
-    if (childId) {
-      let result = this.state.children.filter((obj) => {
-        return obj.name === childId;
-      });
-      let myChoreId = this.state.chores.filter((obj) => {
-        return obj.id === choreId;
-      });
-      this.setState({
-        newChore: {
-          ...this.state.newChore,
-          child_id: result[0].id,
-          id: myChoreId[0].id,
-        },
-      });
-    }
-  }
+  // updateChoreChildId(childId, choreId) {
+  //   if (childId) {
+  //     let result = this.state.children.filter((obj) => {
+  //       return obj.name === childId;
+  //     });
+  //     let myChoreId = this.state.chores.filter((obj) => {
+  //       return obj.id === choreId;
+  //     });
+  //     this.setState({
+  //       newChore: {
+  //         ...this.state.newChore,
+  //         child_id: result[0].id,
+  //         id: myChoreId[0].id,
+  //       },
+  //     });
+  //   }
+  // }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    const { child_id, title } = this.state;
+  // handleSubmit(event) {
+  //   event.preventDefault();
+  //   const { child_id, title } = this.state;
 
-    // this.context.addChore;
-  }
+  //   // this.context.addChore;
+  // }
 
   render() {
     let ChildArray = [];
-    for (let o in this.state.children) {
-      ChildArray.push(this.state.children[o].name);
+    for (let o in this.context.children) {
+      ChildArray.push(this.context.children[o].name);
     }
     return (
-      <form onSubmit={(e) => this.addChore(e)}>
+      <form onSubmit={(e) => this.context.addChore(e)}>
         <input
           className="newChore"
           type="text"
           name="chore"
-          // value={this.state.newChore.title || ""}
+          value={this.context.newChore.title}
           placeholder="New Chore Name"
           aria-label="New Chore Name"
-          onChange={(e) => this.updateChoreTitle(e.target.value)}
+          onChange={(e) => this.context.updateChoreTitle(e.target.value)}
           required
         ></input>
 
@@ -76,8 +76,7 @@ export default class AddChore extends React.Component {
           name="childId"
           id="childId"
           aria-label="New Chore Child Selection"
-          onChange={(e) => this.updateChildId(e.target.value)}
-          // defaultValue=""
+          onChange={(e) => this.context.updateChildId(e.target.value)}
         >
           <option value="none">None</option>
           {ChildArray.map((child) => (

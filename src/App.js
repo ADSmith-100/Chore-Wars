@@ -9,6 +9,8 @@ import ChoreList from "./ChoreList/chore-list";
 import AddChild from "./AddForm/AddChild/addChild";
 import AddForm from "./AddForm/add-form";
 import ChildList from "./ChildList/child-list";
+import ManipulateChores from "./ManipulateChores/manipulate-chores";
+import UnassignedChoreList from "./UnnassignedChoreList/unnassigned-chore-list";
 
 export default class App extends React.Component {
   static contextType = Context;
@@ -17,7 +19,10 @@ export default class App extends React.Component {
 
     this.state = {
       randomIds: [],
-      newChore: "",
+      newChore: {
+        title: "",
+        child_id: "",
+      },
       newChild: "",
       children: [
         { id: 1, name: "Larry" },
@@ -92,8 +97,10 @@ export default class App extends React.Component {
 
       setNewChild: (e) => this.setState({ newChild: e.target.value }),
 
+      // setNewChoreTitle: (e) => this.setState({ newChore.title: e.target.value }),
+
       toggleCompleted: (choreId) => {
-        let chores = this.context.chores.map((chore) => {
+        let chores = this.state.chores.map((chore) => {
           if (chore.id === choreId) {
             chore.status = !chore.status;
           }
@@ -221,7 +228,7 @@ export default class App extends React.Component {
             {/* <Nav /> */}
 
             <p>
-              <AddForm {...this.state} />
+              <AddForm />
             </p>
             <ChildList
               {...this.state}
@@ -229,57 +236,9 @@ export default class App extends React.Component {
               chores={this.state.chores}
               onToggleChore={this.toggleCompleted}
             />
-            <button onClick={(e) => this.unAssignAll(e)}>
-              Unassign All Chores
-            </button>
+            <ManipulateChores />
           </div>
-          <div id="shuffle">
-            <button onClick={(e) => this.shuffleChores(e)}>
-              Shuffle Chores!
-            </button>
-          </div>
-          <h2>Unassigned Chores</h2>
-          <section className="unassigned-chores">
-            {this.state.chores
-              .filter((c) => c.child_id === null)
-              .map((chore) => (
-                <div className="un-chore">
-                  <h3>{chore.title}</h3>
-                  <form onSubmit={(e) => this.reassignChore(e)}>
-                    <select
-                      defaultValue="Pick One"
-                      className="dropDown"
-                      name="childId"
-                      id="childId"
-                      aria-label="New Chore Child Selection"
-                      onChange={(e) =>
-                        this.updateChoreChildId(e.target.value, chore.id)
-                      }
-                      // defaultValue=""
-                    >
-                      <option disabled>Pick One</option>
-                      {ChildArray.map((child) => (
-                        <option
-                          {...child}
-                          key={child.id}
-                          value={child.id}
-                          name={child.name}
-                          text={child.name}
-                        >
-                          {child}
-                        </option>
-                      ))}
-                      ;
-                    </select>
-                    <input
-                      type="submit"
-                      value="Assign"
-                      aria-label="Assign Chore"
-                    />
-                  </form>
-                </div>
-              ))}
-          </section>
+          <UnassignedChoreList />
         </Context.Provider>
       );
     }
