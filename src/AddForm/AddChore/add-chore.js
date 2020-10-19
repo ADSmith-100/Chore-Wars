@@ -50,7 +50,7 @@ export default class AddChore extends React.Component {
     event.preventDefault();
     const { child_id, title } = this.state;
 
-    context.addChore(event);
+    // this.context.addChore;
   }
 
   render() {

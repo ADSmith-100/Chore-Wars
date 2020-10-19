@@ -8,6 +8,7 @@ import ChoreList from "./ChoreList/chore-list";
 
 import AddChild from "./AddForm/AddChild/addChild";
 import AddForm from "./AddForm/add-form";
+import ChildList from "./ChildList/child-list";
 
 export default class App extends React.Component {
   static contextType = Context;
@@ -88,119 +89,127 @@ export default class App extends React.Component {
           comments: "",
         },
       ],
+
+      setNewChild: (e) => this.setState({ newChild: e.target.value }),
+
+      toggleCompleted: (choreId) => {
+        let chores = this.context.chores.map((chore) => {
+          if (chore.id === choreId) {
+            chore.status = !chore.status;
+          }
+          return chore;
+        });
+        this.setState({ chores });
+      },
+
+      updateChoreChildId: (childId, choreId) => {
+        if (childId) {
+          let result = this.state.children.filter((obj) => {
+            return obj.name === childId;
+          });
+          let myChoreId = this.state.chores.filter((obj) => {
+            return obj.id === choreId;
+          });
+          this.setState({
+            newChore: {
+              ...this.state.newChore,
+              child_id: result[0].id,
+              id: myChoreId[0].id,
+            },
+          });
+        }
+      },
+
+      addChild: (e) => {
+        e.preventDefault();
+        this.setState({
+          children: [...this.state.children, { name: e.target.value }],
+        });
+        if (this.state.newChild !== "") {
+          const newChild = {
+            id: this.state.children.length + 1,
+            name: this.state.newChild,
+          };
+          this.setState({ children: [...this.state.children, newChild] });
+          this.setState({ newChild: "" });
+        }
+      },
+
+      updateChoreTitle: (name) => {
+        if (name !== "") {
+          this.setState({
+            newChore: { ...this.state.newChore, title: name },
+          });
+        }
+      },
+
+      updateChildId: (childId) => {
+        let result = this.state.children.filter((obj) => {
+          return obj.name === childId;
+        });
+
+        this.setState({
+          newChore: { ...this.state.newChore, child_id: result[0].id },
+        });
+      },
+
+      reassignChore: (e) => {
+        e.preventDefault();
+
+        let chores = this.state.chores.map((chore) => {
+          if (chore.id === this.state.newChore.id) {
+            chore.child_id = this.state.newChore.child_id;
+          }
+          return chore;
+        });
+        this.setState({ chores });
+        e.target.reset();
+      },
+
+      addChore: (e) => {
+        e.preventDefault();
+        if (this.state.newChore !== "") {
+          const newChore = {
+            id: this.state.chores.length + 1,
+            title: this.state.newChore.title,
+            child_id: this.state.newChore.child_id || null,
+            status: false,
+            comments: "",
+          };
+          this.setState({ chores: [...this.state.chores, newChore] });
+          this.setState({ newChore: "" });
+          e.target.reset();
+        }
+      },
+
+      unAssignAll: (e) => {
+        let chores = this.state.chores.map((chore) => {
+          chore.child_id = null;
+          chore.status = false;
+          chore.comments = "";
+          return chore;
+        });
+        this.setState({ chores });
+        this.setState({ newChore: "" });
+      },
+
+      shuffleChores: (e) => {
+        let randomIds = this.state.children.map((a) => a.id);
+        let newId = randomIds[Math.floor(Math.random() * randomIds.length)];
+        // let chores = this.state.chores.map((chore) => {
+        //   chore.child_id = newId;
+        //   return chore;
+        let chores = this.state.chores.map((chore) => {
+          chore.child_id =
+            randomIds[Math.floor(Math.random() * randomIds.length)];
+          chore.status = false;
+          return chore;
+        });
+
+        this.setState({ chores });
+      },
     };
   }
-  updateChoreChildId(childId, choreId) {
-    if (childId) {
-      let result = this.state.children.filter((obj) => {
-        return obj.name === childId;
-      });
-      let myChoreId = this.state.chores.filter((obj) => {
-        return obj.id === choreId;
-      });
-      this.setState({
-        newChore: {
-          ...this.state.newChore,
-          child_id: result[0].id,
-          id: myChoreId[0].id,
-        },
-      });
-    }
-  }
-
-  addChild(name) {
-    if (this.state.newChild !== "") {
-      const newChild = {
-        id: this.state.children.length + 1,
-        name: name,
-      };
-      this.setState({ children: [...this.state.children, newChild] });
-      this.setState({ newChild: "" });
-    }
-  }
-
-  updateChoreTitle(name) {
-    if (name !== "") {
-      this.setState({
-        newChore: { ...this.state.newChore, title: name },
-      });
-    }
-  }
-
-  updateChildId(childId) {
-    let result = this.state.children.filter((obj) => {
-      return obj.name === childId;
-    });
-
-    this.setState({
-      newChore: { ...this.state.newChore, child_id: result[0].id },
-    });
-  }
-
-  reassignChore = (e) => {
-    e.preventDefault();
-
-    let chores = this.state.chores.map((chore) => {
-      if (chore.id === this.state.newChore.id) {
-        chore.child_id = this.state.newChore.child_id;
-      }
-      return chore;
-    });
-    this.setState({ chores });
-    e.target.reset();
-  };
-
-  addChore = (e) => {
-    e.preventDefault();
-    if (this.state.newChore !== "") {
-      const newChore = {
-        id: this.state.chores.length + 1,
-        title: this.state.newChore.title,
-        child_id: this.state.newChore.child_id || null,
-        status: false,
-        comments: "",
-      };
-      this.setState({ chores: [...this.state.chores, newChore] });
-      this.setState({ newChore: "" });
-      e.target.reset();
-    }
-  };
-
-  toggleCompleted = (choreId) => {
-    let chores = this.state.chores.map((chore) => {
-      if (chore.id === choreId) {
-        chore.status = !chore.status;
-      }
-      return chore;
-    });
-    this.setState({ chores });
-  };
-
-  unAssignAll = (e) => {
-    let chores = this.state.chores.map((chore) => {
-      chore.child_id = null;
-      chore.status = false;
-      chore.comments = "";
-      return chore;
-    });
-    this.setState({ chores });
-    this.setState({ newChore: "" });
-  };
-
-  shuffleChores = (e) => {
-    let randomIds = this.state.children.map((a) => a.id);
-    let newId = randomIds[Math.floor(Math.random() * randomIds.length)];
-    // let chores = this.state.chores.map((chore) => {
-    //   chore.child_id = newId;
-    //   return chore;
-    let chores = this.state.chores.map((chore) => {
-      chore.child_id = randomIds[Math.floor(Math.random() * randomIds.length)];
-      chore.status = false;
-      return chore;
-    });
-
-    this.setState({ chores });
-  };
 
   render() {
     let ChildArray = [];
@@ -214,85 +223,63 @@ export default class App extends React.Component {
             <p>
               <AddForm {...this.state} />
             </p>
-            <h1>Your Chore List</h1>
-
-            <section className="children">
-              {this.state.children.map((child) => (
-                <div className="child">
-                  <h3>{child.name}</h3>
-                  <ul>
-                    {this.state.chores
-                      .filter((c) => c.child_id === child.id)
-                      .map((chore) => (
-                        <li
-                          className={`chore-completed-${chore.status}`}
-                          onClick={() => this.toggleCompleted(chore.id)}
+            <ChildList
+              {...this.state}
+              children={this.state.children}
+              chores={this.state.chores}
+              onToggleChore={this.toggleCompleted}
+            />
+            <button onClick={(e) => this.unAssignAll(e)}>
+              Unassign All Chores
+            </button>
+          </div>
+          <div id="shuffle">
+            <button onClick={(e) => this.shuffleChores(e)}>
+              Shuffle Chores!
+            </button>
+          </div>
+          <h2>Unassigned Chores</h2>
+          <section className="unassigned-chores">
+            {this.state.chores
+              .filter((c) => c.child_id === null)
+              .map((chore) => (
+                <div className="un-chore">
+                  <h3>{chore.title}</h3>
+                  <form onSubmit={(e) => this.reassignChore(e)}>
+                    <select
+                      defaultValue="Pick One"
+                      className="dropDown"
+                      name="childId"
+                      id="childId"
+                      aria-label="New Chore Child Selection"
+                      onChange={(e) =>
+                        this.updateChoreChildId(e.target.value, chore.id)
+                      }
+                      // defaultValue=""
+                    >
+                      <option disabled>Pick One</option>
+                      {ChildArray.map((child) => (
+                        <option
+                          {...child}
+                          key={child.id}
+                          value={child.id}
+                          name={child.name}
+                          text={child.name}
                         >
-                          <span>{chore.title}</span>
-                          {/* {chore.comments !== "" ? (
-                        <em title={chore.comments}>C</em>
-                      ) : (
-                        <em>+</em>
-                      )} */}
-                        </li>
+                          {child}
+                        </option>
                       ))}
-                  </ul>
+                      ;
+                    </select>
+                    <input
+                      type="submit"
+                      value="Assign"
+                      aria-label="Assign Chore"
+                    />
+                  </form>
                 </div>
               ))}
-            </section>
-            <div>
-              <button onClick={(e) => this.unAssignAll(e)}>
-                Unassign All Chores
-              </button>
-            </div>
-            <div id="shuffle">
-              <button onClick={(e) => this.shuffleChores(e)}>
-                Shuffle Chores!
-              </button>
-            </div>
-            <h2>Unassigned Chores</h2>
-            <section className="unassigned-chores">
-              {this.state.chores
-                .filter((c) => c.child_id === null)
-                .map((chore) => (
-                  <div className="un-chore">
-                    <h3>{chore.title}</h3>
-                    <form onSubmit={(e) => this.reassignChore(e)}>
-                      <select
-                        defaultValue="Pick One"
-                        className="dropDown"
-                        name="childId"
-                        id="childId"
-                        aria-label="New Chore Child Selection"
-                        onChange={(e) =>
-                          this.updateChoreChildId(e.target.value, chore.id)
-                        }
-                        // defaultValue=""
-                      >
-                        <option disabled>Pick One</option>
-                        {ChildArray.map((child) => (
-                          <option
-                            {...child}
-                            key={child.id}
-                            value={child.id}
-                            name={child.name}
-                            text={child.name}
-                          >
-                            {child}
-                          </option>
-                        ))}
-                        ;
-                      </select>
-                      <input
-                        type="submit"
-                        value="Assign"
-                        aria-label="Assign Chore"
-                      />
-                    </form>
-                  </div>
-                ))}
-            </section>
-          </div>
+          </section>
         </Context.Provider>
       );
     }

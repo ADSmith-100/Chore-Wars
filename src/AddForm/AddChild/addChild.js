@@ -1,5 +1,6 @@
 import React from "react";
 import Context from "../../Context/context.js";
+import TokenService from "../../services/token-service";
 
 // function addChildRequest(name, callback) {
 //   let id = function () {
@@ -9,13 +10,14 @@ import Context from "../../Context/context.js";
 //     return "_" + Math.random().toString(36).substr(2, 9);
 //   };
 
-//   fetch("https://https://stark-tor-49670.herokuapp.com/api/children", {
+//   fetch("https://stark-tor-49670.herokuapp.com/api/children", {
 //     method: "POST",
-//     headers: {
+//     headers: new Headers({
+//       authorization: `bearer ${TokenService.getAuthToken()}`,
 //       "content-type": "application/json",
-//     },
+//     }),
 //     body: JSON.stringify({
-//       user_id: loggedinUser,
+//       user_id: 1,
 //       name: name.value,
 //     }),
 //   })
@@ -36,43 +38,59 @@ import Context from "../../Context/context.js";
 //     .catch((error) => {
 //       //console.log(error);
 //     });
-
+// }
 export default class AddChild extends React.Component {
   static contextType = Context;
-  constructor(props) {
-    super(props);
-    this.state = {
-      childName: { value: "" },
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     name: { value: "" },
+  //     newChild: "",
+  //   };
+  // }
 
-  updateChild(name) {
-    this.setState({
-      childName: { value: name },
-    });
-  }
+  // addChild = (e) => {
+  //   e.preventDefault();
+  //   if (this.context.newChild !== "") {
+  //     const newChild = {
+  //       id: this.context.children.length + 1,
+  //       name: this.context.newChild.name,
+  //     };
+  //     this.setState({ children: [...this.state.children, newChild] });
+  //     this.setState({ newChild: "" });
+  //     e.target.reset();
+  //   }
+  // };
 
-  handleSubmit(event) {
-    event.preventDefault();
-    const { childName } = this.state;
+  // updateChild(name) {
+  //   if (name !== "") {
+  //     this.setState({
+  //       newChild: { ...this.context.newChild, name: name },
+  //     });
+  //   }
+  // }
 
-    this.context.addChild;
-  }
+  // handleSubmit(event) {
+  //   event.preventDefault();
+  //   const { childName } = this.state;
+
+  //   addChildRequest(childName, this.context.addChild);
+  // }
 
   render() {
     return (
       <div>
         <h2>Add Child</h2>
 
-        <form onSubmit={(e) => this.handleSubmit(e)}>
+        <form onSubmit={(e) => this.context.addChild(e)}>
           <input
             className="newPerson"
             type="text"
             name="person"
-            value={this.state.childName.name}
+            value={this.context.newChild}
             placeholder="New Child Name"
             aria-label="New Person Name"
-            onChange={(e) => this.updateChild(e.target.value)}
+            onChange={(e) => this.context.setNewChild(e)}
             required
           ></input>
           <input type="submit" value="Add" aria-label="Add Child" />
