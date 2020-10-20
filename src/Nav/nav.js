@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { findAllInRenderedTree } from "react-dom/test-utils";
-import { BrowserRouter, Route, NavLink, Link, Router } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./nav.css";
 
 export default class Nav extends Component {
@@ -9,24 +8,25 @@ export default class Nav extends Component {
   };
   render() {
     return (
-      <Router>
-        <div className="Nav">
-          <div className="NavLinks">
-            <h1>
-              <Link to="/">ChoreWars</Link>
-            </h1>
+      <div className="Nav">
+        <div className="NavLinks">
+          <h1>
+            <Link to="/">ChoreWars</Link>
+          </h1>
 
-            <ul className="menu">
-              <li>
-                <Link to="/chore-list">Demo</Link>
-              </li>
-              <li>
-                <Link to="/sign-up-form">Login</Link>
-              </li>
-            </ul>
-          </div>
+          <ul className="menu">
+            <li>
+              <Link to="/chore-list">Demo</Link>
+            </li>
+            <li>
+              <Link to="/sign-up-form">SignUp</Link>
+            </li>
+            <li>
+              <Link to="/login-form">LogIn</Link>
+            </li>
+          </ul>
         </div>
-      </Router>
+      </div>
     );
   }
 }
