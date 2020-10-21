@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import TokenService from "../services/token-service";
 import AuthApiService from "../services/auth-api-service";
 import Context from "../Context/context";
-import Nav from "../Nav/nav";
 
 export default class LoginForm extends Component {
   static contextType = Context;
@@ -11,7 +10,7 @@ export default class LoginForm extends Component {
   //     onLoginSuccess: () => {},
   //   };
 
-  //   state = { error: null };
+  state = { error: null };
 
   //   handleSubmitBasicAuth = (ev) => {
   //     ev.preventDefault();
@@ -26,48 +25,59 @@ export default class LoginForm extends Component {
   //     this.props.onLoginSuccess();
   //   };
 
-  //   handleSubmitJwtAuth = (ev) => {
-  //     ev.preventDefault();
-  //     this.setState({ error: null });
-  //     const { email, password } = ev.target;
+  handleSubmitJwtAuth = (ev) => {
+    ev.preventDefault();
+    this.setState({ error: null });
+    const { email, password } = ev.target;
 
-  //     AuthApiService.postLogin({
-  //       email: email.value,
-  //       password: password.value,
-  //     })
-  //       .then((res) => {
-  //         email.value = "";
-  //         password.value = "";
-  //         TokenService.saveAuthToken(res.authToken);
-  //         this.props.onLoginSuccess();
-  //       })
-  //       .catch((res) => {
-  //         this.setState({ error: res.error });
-  //       });
-  //   };
-
-  submitForm = (e) => {
-    e.preventDefault();
-    alert("Feature coming soon! Please try the demo");
-    // let email = e.target.email.value;
-    // let password = e.target.password.value;
-    // this.context.loginUser(email, password);
+    AuthApiService.postLogin({
+      email: email.value,
+      password: password.value,
+    })
+      .then((res) => {
+        TokenService.saveAuthToken(res.authToken);
+        this.props.history.push("/chore-list");
+      })
+      .catch((res) => {
+        this.setState({ error: res.error });
+      });
   };
 
   render() {
-    // const { error } = this.state;
+    const { error } = this.state;
     return (
       <div>
-        <Nav />
-        <form className="LoginForm" onSubmit={(e) => this.submitForm(e)}>
-          {/* <div role="alert">{error && <p className="red">{error}</p>}</div> */}
+        <form
+          className="LoginForm"
+          onSubmit={(e) => this.handleSubmitJwtAuth(e)}
+        >
+          <div>
+            <p>
+              <h4>Demo Credentials</h4>
+            </p>
+            <p>
+              <strong>email:</strong>
+              demo@demo.com
+            </p>
+            <p>
+              <strong>password:</strong>
+              11AAaa!!
+            </p>
+          </div>
+          <div role="alert">{error && <p className="red">{error}</p>}</div>
           <div className="email">
             <label htmlFor="LoginForm__email">Email</label>
-            <input name="email" type="email" id="LoginForm__email"></input>
+            <input
+              value="demo@demo.com"
+              name="email"
+              type="email"
+              id="LoginForm__email"
+            ></input>
           </div>
           <div className="password">
             <label htmlFor="LoginForm__password">Password</label>
             <input
+              value="11AAaa!!"
               name="password"
               type="password"
               id="LoginForm__password"

@@ -1,16 +1,17 @@
-import React, { Fragment } from "react";
-import { BrowserRouter, Router, Route, Link } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Route } from "react-router-dom";
 import Context from "./Context/context";
 import Nav from "./Nav/nav";
 import IntroData from "./IntroData/intro-data";
 
 import ChoreList from "./ChoreList/chore-list";
-
-import AddChild from "./AddForm/AddChild/addChild";
-import AddForm from "./AddForm/add-form";
-import ChildList from "./ChildList/child-list";
-import ManipulateChores from "./ManipulateChores/manipulate-chores";
-import UnassignedChoreList from "./UnnassignedChoreList/unnassigned-chore-list";
+//beware that deleting these or refreshing causes it to crash?  Something with component did mount?
+//import AddChild from "./AddForm/AddChild/addChild";
+//import AddForm from "./AddForm/add-form";
+//import ChildList from "./ChildList/child-list";
+//import ManipulateChores from "./ManipulateChores/manipulate-chores";
+//import UnassignedChoreList from "./UnnassignedChoreList/unnassigned-chore-list";
+import PrivateRoute from "./Utils/PrivateRoute";
 import LoginForm from "./LogInForm/login-form";
 import SignUpForm from "./SignUpForm/sign-up-form";
 import dummyStore from "./dummy-store";
@@ -139,7 +140,7 @@ export default class App extends React.Component {
 
       shuffleChores: (e) => {
         let randomIds = this.state.children.map((a) => a.id);
-        let newId = randomIds[Math.floor(Math.random() * randomIds.length)];
+        //let newId = randomIds[Math.floor(Math.random() * randomIds.length)];
         let chores = this.state.chores.map((chore) => {
           chore.child_id =
             randomIds[Math.floor(Math.random() * randomIds.length)];
@@ -161,10 +162,11 @@ export default class App extends React.Component {
       <Context.Provider value={this.state}>
         <BrowserRouter>
           <div className="App">
+            <Route path="/" component={Nav} />
             <section>
               <Route exact path="/" component={IntroData} />
             </section>
-            <Route path="/chore-list" component={ChoreList} />
+            <PrivateRoute path="/chore-list" component={ChoreList} />
             <Route path="/login-form" component={LoginForm} />
             <Route path="/sign-up-form" component={SignUpForm} />
           </div>

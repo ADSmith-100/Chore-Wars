@@ -2,52 +2,45 @@ import React from "react";
 import Context from "../../Context/context.js";
 import TokenService from "../../services/token-service";
 
-// function addChildRequest(name, callback) {
-//   let id = function () {
-//     // Math.random should be unique because of its seeding algorithm.
-//     // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-//     // after the decimal.
-//     return "_" + Math.random().toString(36).substr(2, 9);
-//   };
-
-//   fetch("https://stark-tor-49670.herokuapp.com/api/children", {
-//     method: "POST",
-//     headers: new Headers({
-//       authorization: `bearer ${TokenService.getAuthToken()}`,
-//       "content-type": "application/json",
-//     }),
-//     body: JSON.stringify({
-//       user_id: 1,
-//       name: name.value,
-//     }),
-//   })
-//     .then((res) => {
-//       if (!res.ok) {
-//         // get the error message from the response,
-//         return res.json().then((error) => {
-//           // then throw it
-//           throw error;
-//         });
-//       }
-//       return res.json();
-//     })
-//     .then((data) => {
-//       //console.log({ data, callback });
-//       callback(name);
-//     })
-//     .catch((error) => {
-//       //console.log(error);
-//     });
-// }
+function addChildRequest(name, callback) {
+  fetch("https://stark-tor-49670.herokuapp.com/api/children", {
+    method: "POST",
+    headers: {
+      authorization: `bearer ${TokenService.getAuthToken()}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      user_id: 1,
+      name: name.value,
+    }),
+  })
+    .then((res) => {
+      if (!res.ok) {
+        // get the error message from the response,
+        return res.json().then((error) => {
+          // then throw it
+          throw error;
+        });
+      }
+      return res.json();
+    })
+    .then((data) => {
+      //console.log({ data, callback });
+      callback(name);
+    })
+    .catch((error) => {
+      //console.log(error);
+    });
+}
 export default class AddChild extends React.Component {
   static contextType = Context;
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     name: { value: "" },
-  //     newChild: "",
-  //   };
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      user_id: "",
+      name: "",
+    };
+  }
 
   // addChild = (e) => {
   //   e.preventDefault();
@@ -62,20 +55,20 @@ export default class AddChild extends React.Component {
   //   }
   // };
 
-  // updateChild(name) {
-  //   if (name !== "") {
-  //     this.setState({
-  //       newChild: { ...this.context.newChild, name: name },
-  //     });
-  //   }
-  // }
+  updateChild(name) {
+    if (name !== "") {
+      this.setState({
+        newChild: { ...this.context.newChild, name: name },
+      });
+    }
+  }
 
-  // handleSubmit(event) {
-  //   event.preventDefault();
-  //   const { childName } = this.state;
+  handleSubmit(event) {
+    event.preventDefault();
+    const { childName } = this.state;
 
-  //   addChildRequest(childName, this.context.addChild);
-  // }
+    addChildRequest(childName, this.context.addChild);
+  }
 
   render() {
     return (
@@ -90,7 +83,7 @@ export default class AddChild extends React.Component {
             value={this.context.newChild}
             placeholder="New Child Name"
             aria-label="New Person Name"
-            onChange={(e) => this.context.setNewChild(e)}
+            onChange={(e) => this.context.updateChild(e)}
             required
           ></input>
           <input type="submit" value="Add" aria-label="Add Child" />

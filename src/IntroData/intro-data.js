@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Link, Router } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./intro-data.css";
-import Nav from "../Nav/nav";
 
 export default class IntroData extends Component {
   render() {
     return (
       <div className="IntroData">
-        <Nav />
         <div className="IntroHeader">
           <header>
             <h2 className="banner">Housework, meet your match.</h2>

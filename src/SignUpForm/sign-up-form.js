@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Nav from "../Nav/nav.js";
 import "./sign-up-form.css";
 
 export default class SignUpForm extends Component {
@@ -9,7 +8,6 @@ export default class SignUpForm extends Component {
   render() {
     return (
       <div>
-        <Nav />
         <form className="signup-form">
           <div>
             <label>First name</label>

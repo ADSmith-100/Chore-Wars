@@ -1,9 +1,9 @@
 import React from "react";
-import ChoreList from "../ChoreList/chore-list";
+//import ChoreList from "../ChoreList/chore-list";
 import Context from "../Context/context";
-import TokenService from "../services/token-service";
+//import TokenService from "../services/token-service";
 
-function updateChoreRequest(chores, cb) {}
+//function updateChoreRequest(chores, cb) {}
 //   fetch(`https://stark-tor-49670.herokuapp.com/api/chores`, {
 //     method: "PATCH",
 //     headers: new Headers({
@@ -43,7 +43,8 @@ export default class ChildList extends React.Component {
   // }
 
   render() {
-    const ChildList = this.context.children.map((child) => (
+    const { children = [] } = this.context || [];
+    const ChildList = children.map((child) => (
       <div className="child">
         <h3>{child.name}</h3>
         <ul>

@@ -8,11 +8,12 @@ export default class UnassignedChoreList extends React.Component {
     for (let o in this.context.children) {
       ChildArray.push(this.context.children[o].name);
     }
+    const { chores = [] } = this.context || [];
     return (
       <div>
         <h2>Unassigned Chores</h2>
         <section className="unassigned-chores">
-          {this.context.chores
+          {chores
             .filter((c) => c.child_id === null)
             .map((chore) => (
               <div className="un-chore">
