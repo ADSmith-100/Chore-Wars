@@ -22,13 +22,8 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      user: null,
-      randomIds: [],
-      newChore: {
-        title: "",
-        child_id: "",
-      },
-      newChild: "",
+      children: [],
+      chores: [],
 
       loginUser: (email, password) =>
         this.setState({ user: { email, password } }),
@@ -154,7 +149,13 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ ...dummyStore });
+    fetch("https://stark-tor-49670.herokuapp.com/api/children")
+      .then((res) => res.json())
+      .then((children) => this.setState({ children }));
+
+    fetch("https://stark-tor-49670.herokuapp.com/api/chores")
+      .then((res) => res.json())
+      .then((chores) => this.setState({ chores }));
   }
 
   render() {

@@ -80,7 +80,7 @@ export default class AddChild extends React.Component {
             className="newPerson"
             type="text"
             name="person"
-            value={this.context.newChild}
+            // value={this.context.newChild}
             placeholder="New Child Name"
             aria-label="New Person Name"
             onChange={(e) => this.context.updateChild(e)}

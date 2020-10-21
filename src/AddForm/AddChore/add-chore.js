@@ -64,7 +64,7 @@ export default class AddChore extends React.Component {
           className="newChore"
           type="text"
           name="chore"
-          value={this.context.newChore.title}
+          // value={this.context.newChore.title}
           placeholder="New Chore Name"
           aria-label="New Chore Name"
           onChange={(e) => this.context.updateChoreTitle(e.target.value)}
