@@ -1,8 +1,9 @@
 import React from "react";
 import Context from "../../Context/context.js";
 import TokenService from "../../services/token-service";
+import decodeJwt from "jwt-decode";
 
-function addChoreRequest(child_id, title, callback) {
+function addChoreRequest(child_id, title, userId, callback) {
   fetch("https://stark-tor-49670.herokuapp.com/api/chores", {
     method: "POST",
     headers: {
@@ -10,7 +11,7 @@ function addChoreRequest(child_id, title, callback) {
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      user_id: 1,
+      user_id: userId.value,
       child_id: child_id,
       title: title,
       status: false,
@@ -45,6 +46,7 @@ export default class AddChore extends React.Component {
     this.state = {
       child_id: null,
       title: "",
+      user_id: { value: "" },
     };
   }
 
@@ -73,8 +75,17 @@ export default class AddChore extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { child_id, title } = this.state;
-    addChoreRequest(child_id, title, this.context.addChore);
+    const userId = this.state.user_id;
+    addChoreRequest(child_id, title, userId, this.context.addChore);
     event.target.reset();
+  }
+
+  getCurrentUser() {
+    const user = decodeJwt(
+      sessionStorage.getItem("chore-wars-client-auth-token")
+    );
+    this.setState({ user_id: { value: user.user_id } });
+    console.log(user);
   }
 
   render() {
