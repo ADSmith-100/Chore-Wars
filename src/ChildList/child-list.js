@@ -45,13 +45,14 @@ export default class ChildList extends React.Component {
   render() {
     const { children = [] } = this.context || [];
     const ChildList = children.map((child) => (
-      <div className="child">
+      <div className="child" key={child.id}>
         <h3>{child.name}</h3>
-        <ul>
+        <ul key={child.id}>
           {this.context.chores
             .filter((c) => c.child_id === child.id)
             .map((chore) => (
               <li
+                key={chore.id}
                 className={`chore-completed-${chore.status}`}
                 onClick={() => this.context.toggleCompleted(chore.id)}
               >

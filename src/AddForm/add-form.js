@@ -6,8 +6,8 @@ export default class AddForm extends React.Component {
   render() {
     return (
       <div className="AddForm">
-        <AddChild {...this.state} />
-        <AddChore {...this.state} />
+        <AddChild />
+        <AddChore />
       </div>
     );
   }

@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Context from "./Context/context";
 import Nav from "./Nav/nav";
 import IntroData from "./IntroData/intro-data";
-import AuthApiService from "./services/auth-api-service";
+// import AuthApiService from "./services/auth-api-service";
 
 import ChoreList from "./ChoreList/chore-list";
 //beware that deleting these or refreshing causes it to crash?  Something with component did mount?
@@ -25,12 +25,17 @@ export default class App extends React.Component {
     this.state = {
       children: [],
       chores: [],
-      currentUser: "",
 
       addChild: () => {
         fetch("https://stark-tor-49670.herokuapp.com/api/children")
           .then((res) => res.json())
           .then((children) => this.setState({ children }));
+      },
+
+      addChore: () => {
+        fetch("https://stark-tor-49670.herokuapp.com/api/chores")
+          .then((res) => res.json())
+          .then((chores) => this.setState({ chores }));
       },
 
       loginUser: (email, password) =>
@@ -114,20 +119,20 @@ export default class App extends React.Component {
         e.target.reset();
       },
 
-      addChore: (e) => {
-        e.preventDefault();
-        if (this.state.newChore !== "") {
-          const newChore = {
-            id: this.state.chores.length + 1,
-            title: this.state.newChore.title,
-            child_id: this.state.newChore.child_id || null,
-            status: false,
-          };
-          this.setState({ chores: [...this.state.chores, newChore] });
-          this.setState({ newChore: "" });
-          e.target.reset();
-        }
-      },
+      // addChore: (e) => {
+      //   e.preventDefault();
+      //   if (this.state.newChore !== "") {
+      //     const newChore = {
+      //       id: this.state.chores.length + 1,
+      //       title: this.state.newChore.title,
+      //       child_id: this.state.newChore.child_id || null,
+      //       status: false,
+      //     };
+      //     this.setState({ chores: [...this.state.chores, newChore] });
+      //     this.setState({ newChore: "" });
+      //     e.target.reset();
+      //   }
+      // },
 
       unAssignAll: (e) => {
         let chores = this.state.chores.map((chore) => {

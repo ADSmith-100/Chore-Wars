@@ -1,6 +1,5 @@
 import React from "react";
 import Context from "../../Context/context.js";
-import AuthApiService from "../../services/auth-api-service.js";
 import TokenService from "../../services/token-service";
 import decodeJwt from "jwt-decode";
 

@@ -1,26 +1,52 @@
 import React from "react";
 import Context from "../../Context/context.js";
+import TokenService from "../../services/token-service";
 
-// function addChoreRequest(chore, callback) {
-//   let id = function () {
-//     // Math.random should be unique because of its seeding algorithm.
-//     // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-//     // after the decimal.
-//     return "_" + Math.random().toString(36).substr(2, 9);
-//   };
+function addChoreRequest(child_id, title, callback) {
+  fetch("https://stark-tor-49670.herokuapp.com/api/chores", {
+    method: "POST",
+    headers: {
+      authorization: `bearer ${TokenService.getAuthToken()}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      user_id: 1,
+      child_id: child_id,
+      title: title,
+      status: false,
+    }),
+  })
+    .then((res) => {
+      if (!res.ok) {
+        // get the error message from the response,
+        return res.json().then((error) => {
+          // then throw it
+          throw error;
+        });
+      }
+      return res.json();
+    })
+    .then((data) => {
+      //console.log({ data, callback });
+      callback(title);
+
+      //alert("Your note was saved!");
+    })
+
+    .catch((error) => {
+      //console.log(error);
+    });
+}
 
 export default class AddChore extends React.Component {
   static contextType = Context;
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     id: "",
-  //     user_id: "",
-  //     child_id: "",
-  //     title: "",
-  //     status: "",
-  //   };
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      child_id: null,
+      title: "",
+    };
+  }
 
   // updateChoreTitle(name) {
   //   this.setState({
@@ -28,30 +54,28 @@ export default class AddChore extends React.Component {
   //   });
   // }
 
-  // updateChoreChildId(childId, choreId) {
-  //   if (childId) {
-  //     let result = this.state.children.filter((obj) => {
-  //       return obj.name === childId;
-  //     });
-  //     let myChoreId = this.state.chores.filter((obj) => {
-  //       return obj.id === choreId;
-  //     });
-  //     this.setState({
-  //       newChore: {
-  //         ...this.state.newChore,
-  //         child_id: result[0].id,
-  //         id: myChoreId[0].id,
-  //       },
-  //     });
-  //   }
-  // }
+  updateChildId(childId) {
+    let result = this.context.children.filter((obj) => {
+      return obj.name === childId;
+    });
 
-  // handleSubmit(event) {
-  //   event.preventDefault();
-  //   const { child_id, title } = this.state;
+    this.setState({
+      child_id: result[0].id,
+    });
+  }
 
-  //   // this.context.addChore;
-  // }
+  updateChoreTitle(chore) {
+    if (chore !== "") {
+      this.setState({ title: chore });
+    }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { child_id, title } = this.state;
+    addChoreRequest(child_id, title, this.context.addChore);
+    event.target.reset();
+  }
 
   render() {
     let ChildArray = [];
@@ -59,15 +83,15 @@ export default class AddChore extends React.Component {
       ChildArray.push(this.context.children[o].name);
     }
     return (
-      <form onSubmit={(e) => this.context.addChore(e)}>
+      <form onSubmit={(e) => this.handleSubmit(e)}>
         <input
           className="newChore"
           type="text"
-          name="chore"
+          name="title"
           // value={this.context.newChore.title}
           placeholder="New Chore Name"
           aria-label="New Chore Name"
-          onChange={(e) => this.context.updateChoreTitle(e.target.value)}
+          onChange={(e) => this.updateChoreTitle(e.target.value)}
           required
         ></input>
 
@@ -76,13 +100,12 @@ export default class AddChore extends React.Component {
           name="childId"
           id="childId"
           aria-label="New Chore Child Selection"
-          onChange={(e) => this.context.updateChildId(e.target.value)}
+          onChange={(e) => this.updateChildId(e.target.value)}
         >
           <option value="none">None</option>
-          {ChildArray.map((child) => (
+          {ChildArray.map((child, index) => (
             <option
-              {...child}
-              key={child.id}
+              key={index}
               value={child.id}
               name={child.name}
               text={child.name}
