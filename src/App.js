@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Context from "./Context/context";
 import Nav from "./Nav/nav";
 import IntroData from "./IntroData/intro-data";
+import AuthApiService from "./services/auth-api-service";
 
 import ChoreList from "./ChoreList/chore-list";
 //beware that deleting these or refreshing causes it to crash?  Something with component did mount?
@@ -14,7 +15,7 @@ import ChoreList from "./ChoreList/chore-list";
 import PrivateRoute from "./Utils/PrivateRoute";
 import LoginForm from "./LogInForm/login-form";
 import SignUpForm from "./SignUpForm/sign-up-form";
-import dummyStore from "./dummy-store";
+// import dummyStore from "./dummy-store";
 
 export default class App extends React.Component {
   static contextType = Context;
@@ -24,6 +25,13 @@ export default class App extends React.Component {
     this.state = {
       children: [],
       chores: [],
+      currentUser: "",
+
+      addChild: () => {
+        fetch("https://stark-tor-49670.herokuapp.com/api/children")
+          .then((res) => res.json())
+          .then((children) => this.setState({ children }));
+      },
 
       loginUser: (email, password) =>
         this.setState({ user: { email, password } }),
@@ -60,20 +68,20 @@ export default class App extends React.Component {
         }
       },
 
-      addChild: (e) => {
-        e.preventDefault();
-        this.setState({
-          children: [...this.state.children, { name: e.target.value }],
-        });
-        if (this.state.newChild !== "") {
-          const newChild = {
-            id: this.state.children.length + 1,
-            name: this.state.newChild,
-          };
-          this.setState({ children: [...this.state.children, newChild] });
-          this.setState({ newChild: "" });
-        }
-      },
+      // addChild: (e) => {
+      //   e.preventDefault();
+      //   this.setState({
+      //     children: [...this.state.children, { name: e.target.value }],
+      //   });
+      //   if (this.state.newChild !== "") {
+      //     const newChild = {
+      //       id: this.state.children.length + 1,
+      //       name: this.state.newChild,
+      //     };
+      //     this.setState({ children: [...this.state.children, newChild] });
+      //     this.setState({ newChild: "" });
+      //   }
+      // },
 
       updateChoreTitle: (name) => {
         if (name !== "") {
@@ -114,7 +122,6 @@ export default class App extends React.Component {
             title: this.state.newChore.title,
             child_id: this.state.newChore.child_id || null,
             status: false,
-            comments: "",
           };
           this.setState({ chores: [...this.state.chores, newChore] });
           this.setState({ newChore: "" });
@@ -126,7 +133,7 @@ export default class App extends React.Component {
         let chores = this.state.chores.map((chore) => {
           chore.child_id = null;
           chore.status = false;
-          chore.comments = "";
+
           return chore;
         });
         this.setState({ chores });
@@ -149,6 +156,15 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    // const user = AuthApiService.getCurrentUser();
+
+    // if (user) {
+    //   this.setState({
+    //     currentUser: user,
+    //   });
+    //   console.log(user);
+    // }
+
     fetch("https://stark-tor-49670.herokuapp.com/api/children")
       .then((res) => res.json())
       .then((children) => this.setState({ children }));

@@ -1,4 +1,5 @@
 import config from "../config";
+// import decodeJwt from "jwt-decode";
 
 const AuthApiService = {
   postLogin(credentials) {
@@ -23,6 +24,15 @@ const AuthApiService = {
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     );
   },
+  // getCurrentUser() {
+  //   const user = decodeJwt(localStorage.getItem("token"));
+
+  //   if (user && user.accessToken) {
+  //     return { "x-access-token": user.accessToken };
+  //   } else {
+  //     return {};
+  //   }
+  // },
 };
 
 export default AuthApiService;

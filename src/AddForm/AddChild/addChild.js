@@ -1,8 +1,10 @@
 import React from "react";
 import Context from "../../Context/context.js";
+import AuthApiService from "../../services/auth-api-service.js";
 import TokenService from "../../services/token-service";
+import decodeJwt from "jwt-decode";
 
-function addChildRequest(name, callback) {
+function addChildRequest(name, userId, callback) {
   fetch("https://stark-tor-49670.herokuapp.com/api/children", {
     method: "POST",
     headers: {
@@ -10,7 +12,7 @@ function addChildRequest(name, callback) {
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      user_id: 1,
+      user_id: userId.value,
       name: name.value,
     }),
   })
@@ -32,13 +34,14 @@ function addChildRequest(name, callback) {
       //console.log(error);
     });
 }
+
 export default class AddChild extends React.Component {
   static contextType = Context;
   constructor(props) {
     super(props);
     this.state = {
-      user_id: "",
-      name: "",
+      childName: { value: "" },
+      user_id: { value: "" },
     };
   }
 
@@ -58,16 +61,26 @@ export default class AddChild extends React.Component {
   updateChild(name) {
     if (name !== "") {
       this.setState({
-        newChild: { ...this.context.newChild, name: name },
+        childName: { value: name },
       });
+      this.getCurrentUser();
     }
   }
 
   handleSubmit(event) {
     event.preventDefault();
     const { childName } = this.state;
+    const userId = this.state.user_id;
+    addChildRequest(childName, userId, this.context.addChild);
+    event.target.reset();
+  }
 
-    addChildRequest(childName, this.context.addChild);
+  getCurrentUser() {
+    const user = decodeJwt(
+      sessionStorage.getItem("chore-wars-client-auth-token")
+    );
+    this.setState({ user_id: { value: user.user_id } });
+    console.log(user);
   }
 
   render() {
@@ -75,15 +88,15 @@ export default class AddChild extends React.Component {
       <div>
         <h2>Add Child</h2>
 
-        <form onSubmit={(e) => this.context.addChild(e)}>
+        <form onSubmit={(e) => this.handleSubmit(e)}>
           <input
             className="newPerson"
             type="text"
-            name="person"
+            name="name"
             // value={this.context.newChild}
             placeholder="New Child Name"
             aria-label="New Person Name"
-            onChange={(e) => this.context.updateChild(e)}
+            onChange={(e) => this.updateChild(e.target.value)}
             required
           ></input>
           <input type="submit" value="Add" aria-label="Add Child" />
