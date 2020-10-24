@@ -36,13 +36,11 @@ function addChildRequest(name, userId, callback) {
 
 export default class AddChild extends React.Component {
   static contextType = Context;
-  constructor(props) {
-    super(props);
-    this.state = {
-      childName: { value: "" },
-      user_id: { value: "" },
-    };
-  }
+
+  state = {
+    childName: { value: "" },
+    user_id: { value: "" },
+  };
 
   // addChild = (e) => {
   //   e.preventDefault();

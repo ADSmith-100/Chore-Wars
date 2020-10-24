@@ -26,6 +26,17 @@ export default class App extends React.Component {
       children: [],
       chores: [],
 
+      shuffleAllChores: () => {
+        fetch("https://stark-tor-49670.herokuapp.com/api/chores")
+          .then((res) => res.json())
+          .then((chores) => this.setState({ chores }));
+      },
+      unassignAllChores: () => {
+        fetch("https://stark-tor-49670.herokuapp.com/api/chores")
+          .then((res) => res.json())
+          .then((chores) => this.setState({ chores }));
+      },
+
       addChild: () => {
         fetch("https://stark-tor-49670.herokuapp.com/api/children")
           .then((res) => res.json())
@@ -37,6 +48,11 @@ export default class App extends React.Component {
           .then((res) => res.json())
           .then((chores) => this.setState({ chores }));
       },
+      // updateChore: () => {
+      //   fetch("https://stark-tor-49670.herokuapp.com/api/chores")
+      //     .then((res) => res.json())
+      //     .then((chores) => this.setState({ chores }));
+      // },
 
       loginUser: (email, password) =>
         this.setState({ user: { email, password } }),

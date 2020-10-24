@@ -2,7 +2,7 @@ import React from "react";
 import Context from "../../Context/context";
 import TokenService from "../../services/token-service";
 
-function shuffleAllChoresRequest(ShuffledChores, callback) {
+function unassignAllChoresRequest(UnassignedChores, callback) {
   fetch("https://stark-tor-49670.herokuapp.com/api/chores", {
     method: "PUT",
     headers: {
@@ -10,7 +10,7 @@ function shuffleAllChoresRequest(ShuffledChores, callback) {
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      ShuffledChores,
+      UnassignedChores,
     }),
   })
     .then((res) => {
@@ -25,41 +25,38 @@ function shuffleAllChoresRequest(ShuffledChores, callback) {
     })
     .then((data) => {
       //console.log({ data, callback });
-      callback(ShuffledChores);
+      callback(UnassignedChores);
     })
     .catch((error) => {
       //console.log(error);
     });
 }
 
-export default class shuffleChores extends React.Component {
+export default class UnassignAll extends React.Component {
   static contextType = Context;
+
   state = {
     chores: {},
   };
 
-  shuffleChores(e) {
-    let randomIds = this.context.children.map((a) => a.id);
-    //let newId = randomIds[Math.floor(Math.random() * randomIds.length)];
+  unAssignAll(e) {
     let chores = this.context.chores.map((chore) => {
-      chore.child_id = randomIds[Math.floor(Math.random() * randomIds.length)];
+      chore.child_id = null;
       chore.status = false;
+
       return chore;
     });
-
     this.setState({ chores });
-    let { ShuffledChores } = this.state;
-    shuffleAllChoresRequest(ShuffledChores, this.context.shuffleAllChores);
+    let { UnassignedChores } = this.state;
+    unassignAllChoresRequest(UnassignedChores, this.context.unassignAllChores);
+    // this.setState({ newChore: "" });
   }
-
   render() {
     return (
       <div>
-        <div id="shuffle">
-          <button onClick={(e) => this.context.shuffleChores(e)}>
-            Shuffle Chores!
-          </button>
-        </div>
+        <button onClick={(e) => this.unAssignAll(e)}>
+          Unassign All Chores
+        </button>
       </div>
     );
   }

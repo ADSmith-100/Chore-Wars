@@ -41,14 +41,12 @@ function addChoreRequest(child_id, title, userId, callback) {
 
 export default class AddChore extends React.Component {
   static contextType = Context;
-  constructor(props) {
-    super(props);
-    this.state = {
-      child_id: null,
-      title: "",
-      user_id: { value: "" },
-    };
-  }
+
+  state = {
+    child_id: "",
+    title: "",
+    user_id: { value: "" },
+  };
 
   // updateChoreTitle(name) {
   //   this.setState({

@@ -1,5 +1,7 @@
 import React from "react";
 import Context from "../Context/context";
+import UnassignChores from "./UnassignAllChores/unassign-chores";
+import ShuffleChores from "./ShuffleChores/shuffle-chores";
 
 export default class ManipulateChores extends React.Component {
   static contextType = Context;
@@ -7,16 +9,8 @@ export default class ManipulateChores extends React.Component {
   render() {
     return (
       <div>
-        <div>
-          <button onClick={(e) => this.context.unAssignAll(e)}>
-            Unassign All Chores
-          </button>
-        </div>
-        <div id="shuffle">
-          <button onClick={(e) => this.context.shuffleChores(e)}>
-            Shuffle Chores!
-          </button>
-        </div>
+        <UnassignChores />
+        <ShuffleChores />
       </div>
     );
   }
