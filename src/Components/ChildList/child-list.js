@@ -1,6 +1,6 @@
 import React from "react";
 //import ChoreList from "../ChoreList/chore-list";
-import Context from "../Context/context";
+import Context from "../../Context/context";
 //import TokenService from "../services/token-service";
 
 //function updateChoreRequest(chores, cb) {}

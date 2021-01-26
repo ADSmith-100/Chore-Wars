@@ -1,10 +1,10 @@
 import React from "react";
-import Context from "../../Context/context";
-import TokenService from "../../services/token-service";
+import Context from "../../../Context/context";
+import TokenService from "../../../services/token-service";
 
 function shuffleAllChoresRequest(ShuffledChores, callback) {
   fetch("https://stark-tor-49670.herokuapp.com/api/chores", {
-    method: "PUT",
+    method: "POST",
     headers: {
       authorization: `bearer ${TokenService.getAuthToken()}`,
       "content-type": "application/json",

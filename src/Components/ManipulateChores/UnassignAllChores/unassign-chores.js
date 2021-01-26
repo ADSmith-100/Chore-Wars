@@ -1,17 +1,15 @@
 import React from "react";
-import Context from "../../Context/context";
-import TokenService from "../../services/token-service";
+import Context from "../../../Context/context";
+import TokenService from "../../../services/token-service";
 
-function unassignAllChoresRequest(UnassignedChores, callback) {
+function unassignAllChoresRequest(chores, callback) {
   fetch("https://stark-tor-49670.herokuapp.com/api/chores", {
     method: "PUT",
     headers: {
       authorization: `bearer ${TokenService.getAuthToken()}`,
       "content-type": "application/json",
     },
-    body: JSON.stringify({
-      UnassignedChores,
-    }),
+    body: JSON.stringify({ chores }),
   })
     .then((res) => {
       if (!res.ok) {
@@ -25,7 +23,7 @@ function unassignAllChoresRequest(UnassignedChores, callback) {
     })
     .then((data) => {
       //console.log({ data, callback });
-      callback(UnassignedChores);
+      callback(chores);
     })
     .catch((error) => {
       //console.log(error);
@@ -47,9 +45,10 @@ export default class UnassignAll extends React.Component {
       return chore;
     });
     this.setState({ chores });
-    let { UnassignedChores } = this.state;
-    unassignAllChoresRequest(UnassignedChores, this.context.unassignAllChores);
+    let unassignedChores = this.state.chores;
+    unassignAllChoresRequest(chores, this.context.unassignAllChores);
     // this.setState({ newChore: "" });
+    console.log(chores);
   }
   render() {
     return (

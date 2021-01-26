@@ -1,6 +1,6 @@
 import React from "react";
-import Context from "../../Context/context.js";
-import TokenService from "../../services/token-service";
+import Context from "../../../Context/context.js";
+import TokenService from "../../../services/token-service";
 import decodeJwt from "jwt-decode";
 
 function addChoreRequest(child_id, title, userId, callback) {

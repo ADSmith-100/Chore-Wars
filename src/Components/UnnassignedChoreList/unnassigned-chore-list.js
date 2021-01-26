@@ -1,6 +1,6 @@
 import React from "react";
-import Context from "../Context/context";
-import TokenService from "../services/token-service";
+import Context from "../../Context/context";
+import TokenService from "../../services/token-service";
 
 function reassignChoreRequest(childId, choreId, callback) {
   fetch(`https://stark-tor-49670.herokuapp.com/api/chores/${choreId}`, {
