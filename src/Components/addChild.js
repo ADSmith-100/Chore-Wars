@@ -68,10 +68,18 @@ export default class AddChild extends React.Component {
     event.preventDefault();
     const { childName } = this.state;
     const userId = this.state.user_id;
-    addChildRequest(childName, userId, this.context.addChild);
-    event.target.reset();
+    console.log(this.state.childName.value);
+    if (
+      this.context.children.find(
+        (child) => child.name === this.state.childName.value
+      )
+    ) {
+      window.alert(`${childName.value} already exists!`);
+    } else {
+      addChildRequest(childName, userId, this.context.addChild);
+      event.target.reset();
+    }
   }
-
   getCurrentUser() {
     const user = decodeJwt(
       sessionStorage.getItem("chore-wars-client-auth-token")
