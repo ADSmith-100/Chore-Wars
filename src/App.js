@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import Context from "./Context/context";
-import Nav from "./Components/Nav/nav";
-import IntroData from "./Components/IntroData/intro-data";
+import Nav from "./Components/nav";
+import IntroData from "./Components/intro-data";
 // import AuthApiService from "./services/auth-api-service";
-
-import ChoreList from "./Components/ChoreList/chore-list";
+import Footer from "./Components/footer";
+import ChoreList from "./Components/chore-list";
 //beware that deleting these or refreshing causes it to crash?  Something with component did mount?
 //import AddChild from "./AddForm/AddChild/addChild";
 //import AddForm from "./AddForm/add-form";
@@ -13,8 +13,8 @@ import ChoreList from "./Components/ChoreList/chore-list";
 //import ManipulateChores from "./ManipulateChores/manipulate-chores";
 //import UnassignedChoreList from "./UnnassignedChoreList/unnassigned-chore-list";
 import PrivateRoute from "./Utils/PrivateRoute";
-import LoginForm from "./Components/LogInForm/login-form";
-import SignUpForm from "./Components/SignUpForm/sign-up-form";
+import LoginForm from "./Components/login-form";
+import SignUpForm from "./Components/sign-up-form";
 // import dummyStore from "./dummy-store";
 
 export default class App extends React.Component {
@@ -208,6 +208,7 @@ export default class App extends React.Component {
             <Route path="/login-form" component={LoginForm} />
             <Route path="/sign-up-form" component={SignUpForm} />
           </div>
+          <Footer />
         </BrowserRouter>
       </Context.Provider>
     );
