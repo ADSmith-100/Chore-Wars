@@ -3,14 +3,14 @@ import Context from "../Context/context";
 import TokenService from "../services/token-service";
 
 function reassignChoreRequest(childId, choreId, callback) {
-  fetch(`https://stark-tor-49670.herokuapp.com/api/chores/${choreId}`, {
+  fetch(`https://stark-tor-49670.herokuapp.com/api/chores/${childId}`, {
     method: "PATCH",
     headers: {
       authorization: `bearer ${TokenService.getAuthToken()}`,
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      child_id: childId,
+      child_id: choreId,
     }),
   })
     .then((res) => {
@@ -24,7 +24,6 @@ function reassignChoreRequest(childId, choreId, callback) {
       return res.json();
     })
     .then((data) => {
-      //console.log({ data, callback });
       callback(childId);
     })
     .catch((error) => {
@@ -75,7 +74,7 @@ export default class UnassignedChoreList extends React.Component {
     const choreId = this.state.id;
     const childId = this.state.child_id;
     // const userId = this.state.user_id;
-    reassignChoreRequest(choreId, childId, this.context.updateChore);
+    reassignChoreRequest(choreId, childId, this.context.addChore);
     event.target.reset();
   }
 
@@ -92,7 +91,7 @@ export default class UnassignedChoreList extends React.Component {
           {chores
             .filter((c) => c.child_id === null)
             .map((chore) => (
-              <div className="un-chore">
+              <div key={chore.id} className="un-chore">
                 <h3>{chore.title}</h3>
                 <form onSubmit={(e) => this.handleSubmit(e)}>
                   <select
