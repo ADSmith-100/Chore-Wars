@@ -131,3 +131,4 @@ export default class UnassignedChoreList extends React.Component {
     );
   }
 }
+//WW
